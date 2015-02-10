@@ -1,6 +1,6 @@
 *.rbc
 capybara-*.html
-.rspec
+#.rspec
 /log
 /tmp
 /db/*.sqlite3
@@ -29,7 +29,7 @@ config/initializers/secret_token.rb
 /vendor/assets/bower_components
 *.bowerrc
 bower.json
-config/mongoid.yml
+#config/mongoid.yml
 *.swp
 
 # Ignore application configuration

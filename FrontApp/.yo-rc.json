@@ -1,0 +1,6 @@
+{
+  "generator-ngbp-material": {
+    "projectName": "trouverDesTerrains",
+    "useCoffeescript": true
+  }
+}

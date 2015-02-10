@@ -1,0 +1,19 @@
+/* Less file for landing*/
+.landing-background {
+  @extend .full-width;
+  @extend .full-height;
+  background: linear-gradient( rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.0) ),url(../assets/landscape_comp.jpg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachement: fixed;
+  background-size: cover;
+
+}
+
+.md-button.signin-button {
+  padding: 10px;
+}
+
+.text-white {
+  color: white;
+}

@@ -1,0 +1,100 @@
+/**
+ * This is the main application stylesheet. It should include or import all
+ * stylesheets used throughout the application as this is the only stylesheet in
+ * the Grunt configuration that is automatically processed.
+ */
+
+
+//@import 'angular_material';
+
+
+
+/**
+ * Typography
+ */
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto Regular'), local('Roboto-Regular'), url(fonts/Roboto-Regular.woff) format('woff');
+}
+
+.full-height {
+  height: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.grey-bg {
+  background-color: rgba(0, 0, 0, 0.05 ) !important;
+}
+
+html, body {
+  @extend .full-height;
+  @extend .full-width;
+}
+
+[ui-sref], 
+[ng-click] {
+  cursor: pointer
+}
+
+.big-padding {
+  padding: 30px;
+}
+
+.center {
+  text-align: center;
+}
+
+.text-cyan {
+  color: rgb( 0, 184, 212 );
+}
+
+$pink: rgb( 233, 30, 99 );
+.text-pink {
+  color: $pink;
+}
+
+.lands-list .md-tile-content {
+}
+
+md-tabs.md-white-theme {
+  .md-header {
+    background-color: white !important;
+    color: rgba( 0, 0, 0, 0.73 ) !important;
+    height: 55px;
+  }
+}
+
+md-tabs.md-white-theme md-tabs-ink-bar {
+  color: $pink !important;
+  background: $pink !important;
+  height: 5px;
+}
+
+md-tabs.md-white-theme md-tab {
+  color: rgba( 0, 0, 0, 0.73 ) !important;
+}
+
+.md-whiteframe-z1 {
+}
+
+.wrapper {
+  background-color: white;
+  @extend .md-whiteframe-z1;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 40px;
+  margin-bottom: 200px;
+  @media (max-width: 624px) {
+    margin: 0;
+  }
+}
+
+.pacifico {
+  font-family: 'Pacifico', 'Roboto', sans-serif;
+}

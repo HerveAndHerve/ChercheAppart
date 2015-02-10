@@ -1,0 +1,67 @@
+section
+  div.md-subheader.md-default-theme
+    div.md-subheader-content
+      h2 {{ project.name }}
+      span( ng-show="$state.current.name == 'main.projects.detail.new'" ) {{ project.new_lands_count }} terrains non classés
+      span( ng-show="$state.current.name == 'main.projects.detail.archived'" ) {{ project.archived_lands_count }}  terrains archivés
+      span( ng-show="$state.current.name == 'main.projects.detail.favourite'" ) {{ project.favorite_lands_count }}  terrains intéressants 
+
+  md-list.lands-list( layout="column" )
+    md-item( 
+      ng-repeat="land in project.lands | landCat:status | reverse"
+      md-swipe-left="onSwipeLeft(land)"
+      md-swipe-right="onSwipeRight(land)"
+    )
+      md-divider
+      md-item-content( style="background-color: white" )
+        div.md-tile-left.md-image-tile
+          img( ng-src="{{land.img}}" class="land-image" ng-if="land.img")
+        div.md-tile-content
+          h3
+            a.text-cyan(
+              target = '_blank'
+              ng-href="{{ land.url }}"
+            ) {{ land.town_readable_name }}
+            small  - {{ land.surface_in_squared_meters | number }} m
+              sup 2
+          p prix : {{ land.price_in_euro | number }} &euro;
+          p temps de trajet  : {{ land.town_car_travel_time_text }}
+          p {{ land.description }} 
+
+          md-button.md-primary.md-small( 
+            ng-click="archive(land)"
+            swipe-left
+            ng-hide="$state.includes('main.projects.detail.archived')"
+            hide-sm
+          )
+            span.fa.fa-archive
+            |  archiver
+
+          md-button.md-primary.md-small( 
+            ng-click="unSortLand(land)"
+            swipe-right
+            ng-show="$state.includes('main.projects.detail.archived')"
+            hide-sm
+          )
+            span.fa.fa-archive
+            |  annuler archiver
+
+          md-button.md-primary.md-small( 
+            ng-click="favourite(land)" 
+            swipe-right
+            ng-hide="$state.includes('main.projects.detail.favourite')"
+            hide-sm
+          )
+            span.fa.fa-star
+            |  ajouter aux favoris
+
+          md-button.md-primary.md-small( 
+            ng-click="unSortLand(land)" 
+            swipe-left
+            ng-show="$state.includes('main.projects.detail.favourite')"
+            hide-sm
+          )
+            span.fa.fa-star
+            |  retirer des favoris
+
+

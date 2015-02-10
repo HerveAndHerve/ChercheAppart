@@ -1,0 +1,71 @@
+/*
+==============================================
+disappearRight
+==============================================
+*/
+
+.ng-leave.disappearRight {
+  animation-name: disappearRight;
+  -webkit-animation-name: disappearRight; 
+
+  animation-duration: 0.4s; 
+  -webkit-animation-duration: 0.4s;
+
+  animation-timing-function: ease-in;  
+  -webkit-animation-timing-function: ease-in;  
+}
+
+@keyframes disappearRight {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@-webkit-keyframes disappearRight {
+  0% {
+    -webkit-transform: translateX(0);
+  }
+  100% {
+    -webkit-transform: translateX(100%);
+  }   
+}
+
+
+/*
+==============================================
+disappearLeft
+==============================================
+*/
+
+.ng-leave.disappearLeft {
+  animation-name: disappearLeft;
+  -webkit-animation-name: disappearLeft; 
+
+  animation-duration: 0.4s; 
+  -webkit-animation-duration: 0.4s;
+
+  animation-timing-function: ease-in;  
+  -webkit-animation-timing-function: ease-in;  
+
+}
+
+@keyframes disappearLeft {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@-webkit-keyframes disappearLeft {
+  0% {
+    -webkit-transform: translateX(0);
+  }
+  100% {
+    -webkit-transform: translateX(-100%);
+  }
+}

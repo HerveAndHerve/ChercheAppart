@@ -1,0 +1,10 @@
+/* sass file for projetDetail*/
+
+md-item.ng-leave {
+  & md-item-content {
+   background-color: transparent !important;
+  }
+  & md-divider {
+    display: none;
+  }
+}

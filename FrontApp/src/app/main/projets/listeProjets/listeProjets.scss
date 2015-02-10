@@ -1,0 +1,17 @@
+/* Less file for listeProjets*/
+
+// oups -_-
+$pink: rgb( 233, 30, 99 );
+
+$news-count-width: 2.2em;
+$news-count-color: $pink;
+$news-count-margin: 1.5em;
+
+.news-count {
+  width: $news-count-width;
+  height: $news-count-width;
+  border-radius: $news-count-width / 2;
+  background-color: rgba( 0, 0, 0, 0.3 );
+  margin: $news-count-margin;
+  color: white;
+}

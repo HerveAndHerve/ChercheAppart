@@ -1,0 +1,30 @@
+section
+  md-subheader.md-primary 
+    div.md-subheader-content
+      h2.md-subheader-content Mes projets
+
+  md-list( layout="column" )
+    md-item( 
+      ng-repeat="project in Project.projects"
+      ng-click="navToProject(project)"
+      style="position: relative"
+      md-ink-ripple
+    )
+      md-divider
+      md-item-content
+        div.md-tile-left
+          div.news-count( 
+            layout="row"
+            layout-align="center center" 
+          )
+            span {{ project.new_lands_count }}
+        div.md-tile-content
+          h3.text-cyan {{ project.name }} 
+          h4 {{ project.town.readable_name }}
+          p 
+            | à moins de {{ project.max_distance / 1000 | number }} km - 
+            | surface entre {{ project.min_surface | number }} et {{ project.max_surface }} m
+            sup 2
+
+md-button.action-button.md-warn.md-fab( ui-sref="main.projects.new")
+  span.fa.fa-plus

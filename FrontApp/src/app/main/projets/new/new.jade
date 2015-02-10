@@ -1,0 +1,49 @@
+div.big-padding
+  md-subheader.md-accent Définissez vos critères de recherche
+
+  md-content.md-padding
+
+    md-input-container
+      label Nom du projet
+      input(
+        ng-model="project.name"
+        type="text"
+        name="name"
+      )
+
+    md-input-container
+      label Ville de référence
+      input(
+        ng-model="project.town"
+        typeahead-min-length="3"
+        typeahead-on-select="console.log($item)"
+        typeahead-wait-ms="100"
+        typeahead-loading="loading"
+        typeahead="town as town.readable_name for town in townsTypeahead( $viewValue )"
+        name="name"
+      )
+
+    md-input-container
+      label Distance max depuis la ville de référence : 
+        span.text-cyan  {{ (project.max_distance || 0) / 1000 | number }} km
+    md-slider( flex, step="10000", min="0", max="1500000", ng-model="project.max_distance", class="md-accent")
+
+    md-input-container
+      label Surface min : 
+        span.text-cyan  {{ project.min_surface | number }} m
+          sup 2
+    md-slider( flex, min="0", step="10", max="100000", ng-model="project.min_surface", class="md-accent")
+
+    md-input-container
+      label Surface max : 
+        span.text-cyan  {{ project.max_surface | number }} m
+          sup 2
+    md-slider( flex, step="10", min="0", max="100000", ng-model="project.max_surface", class="md-accent")
+
+    div( layout, layout-align="end", style="margin-top: 30px" )
+      md-button.md-raised.md-warn( 
+        ng-click="createProject()"
+      )
+        | Créer le projet
+
+

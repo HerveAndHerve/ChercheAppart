@@ -1,0 +1,12 @@
+/* Less file for projets*/
+$land-image-width: 5em;
+$land-image-margin: 2em;
+.land-image {
+  width: $land-image-width;
+  border-radius: $land-image-width / 2;
+  margin: $land-image-margin;
+}
+
+.md-image-tile {
+  width: $land-image-width + 2 * $land-image-margin;
+}

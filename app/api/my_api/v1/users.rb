@@ -9,7 +9,7 @@ module MyApi
         desc "get my profile informations"
         get :me do 
           sign_in!
-          present :user, current_user, with: MyApi::V1::Entities::User
+          present :user, current_user, with: MyApi::Entities::User
         end
         #}}}
 
@@ -32,7 +32,7 @@ module MyApi
         post :sign_in do 
           if (u = User.find_by(email: params[:user][:email])) and u.valid_password?(params[:user][:password])
             sign_in(:user, u)
-            present :user, current_user, with: MyApi::V1::Entities::User
+            present :user, current_user, with: MyApi::Entities::User
             present :status, :signed_in
           else
             error!("wrong password/email combination",401)
@@ -53,7 +53,7 @@ module MyApi
           u = User.new(email: params[:user][:email], password: params[:user][:password], password_confirmation: params[:user][:password_confirmation])
           if u.save
             sign_in(:user, u)
-            present :user, u, with: MyApi::V1::Entities::User
+            present :user, u, with: MyApi::Entities::User
           else
             error! u.errors
           end

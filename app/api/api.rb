@@ -5,7 +5,7 @@ class API < Grape::API
 
     helpers Devise::Controllers::SignInOut
     helpers Devise::Controllers::StoreLocation
-    helpers MyApi::V1::Helpers::Session
+    helpers MyApi::Helpers::Session
 
     # Mount some api methods
     mount MyApi::V1::Ping

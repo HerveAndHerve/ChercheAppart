@@ -10,7 +10,7 @@ module MyApi
       get :ping do 
         h = HashWithIndifferentAccess.new
         h[:ping] = params[:ping]
-        present :ping, h, with: MyApi::V1::Entities::Ping
+        present :ping, h, with: MyApi::Entities::Ping
       end
 
 

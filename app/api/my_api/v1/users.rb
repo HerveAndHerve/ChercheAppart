@@ -5,6 +5,13 @@ module MyApi
 
       namespace :users do 
 
+        #{{{
+        desc "google omniauth login"
+        get "auth/google_oauth2" do 
+          # config/routes should catch this. The method is only defined here so it's properly documented.
+        end
+        #}}}
+
         #{{{ me
         desc "get my profile informations"
         get :me do 

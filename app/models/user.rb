@@ -1,9 +1,15 @@
 class User
   include Mongoid::Document
+  include GoogleOmniauth
+
+
+  has_and_belongs_to_many :projects, class_name: "Project", inverse_of: :owners
+
+  #{{{ devise
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+  devise :database_authenticatable, :registerable, :rememberable, :trackable
+  devise :omniauthable, omniauth_providers: [:google_oauth2]
 
   ## Database authenticatable
   field :email,              type: String, default: ""
@@ -33,7 +39,7 @@ class User
   # field :failed_attempts, type: Integer, default: 0 # Only if lock strategy is :failed_attempts
   # field :unlock_token,    type: String # Only if unlock strategy is :email or :both
   # field :locked_at,       type: Time
-
+  #}}}
 
   class << self
     def serialize_from_session(key,salt)

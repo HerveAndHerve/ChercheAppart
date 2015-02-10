@@ -2,9 +2,17 @@ class Ad
   include Mongoid::Document
   include Mongoid::Timestamps
 
+  field :name
   field :url
   field :provider
 
-  validates_presence_of :url
-  validates_uniqueness_of :url
+  field :surface
+  field :price
+  field :picture
+  field :description
+  field :location
+
+  validates_presence_of :url, :surface, :price
+  validates_uniqueness_of :url, :surface, :price
+
 end

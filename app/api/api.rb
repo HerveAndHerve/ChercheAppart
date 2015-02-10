@@ -10,6 +10,7 @@ class API < Grape::API
     # Mount some api methods
     mount MyApi::V1::Ping
     mount MyApi::V1::Users
+    mount MyApi::V1::Projects
 
     # Generate an api documentation
     add_swagger_documentation(mount_path: '/doc/swagger_doc', base_path: '/api') 

@@ -2,7 +2,6 @@ class Project
   include Mongoid::Document
   include Mongoid::Timestamps
 
-
   field :name
 
   has_and_belongs_to_many :owners, class_name: "User", inverse_of: :projects

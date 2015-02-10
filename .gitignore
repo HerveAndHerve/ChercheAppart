@@ -31,3 +31,6 @@ config/secrets.yml
 bower.json
 config/mongoid.yml
 *.swp
+
+# Ignore application configuration
+/config/application.yml

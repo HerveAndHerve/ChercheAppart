@@ -30,8 +30,7 @@ group :test, :development do
   gem 'pry'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
-  gem 'rspec-autotest'
-  gem 'autotest-rails'
+  gem 'guard-rspec'
 end
 
 gem 'grape'

@@ -14,4 +14,5 @@ class AdList
   def ads_count
     ad_ids.size
   end
+
 end

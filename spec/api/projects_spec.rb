@@ -59,4 +59,55 @@ describe MyApi::V1::Projects do
 
   #}}}
 
+  describe :enlist_ad do 
+    before do 
+      sign_up_and_login!
+      @p = FactoryGirl.build(:project)
+      @p.owners << @user
+      @a = FactoryGirl.build(:ad)
+      @p.save
+      @a.save
+      @user.save
+    end
+
+    subject(:enlist_with_new_name) { post "/api/projects/#{@p.id}/ads/enlist", {ad_id: @a.id, list_name_or_id: 'tagada'} ; @p.reload}
+    subject(:enlist_with_existing_name) { post "/api/projects/#{@p.id}/ads/enlist", {ad_id: @a.id, list_name_or_id: 'archived'} ; @p.reload}
+    subject(:enlist_with_id)  { post "/api/projects/#{@p.id}/ads/enlist", {ad_id: @a.id, list_name_or_id: @p.ad_lists.find_by(name: 'archived').id} ; @p.reload} 
+
+    describe 'enlist with new name' do 
+
+      it 'creates list' do 
+        expect{enlist_with_new_name}.to change{@p.ad_lists.count}.by(1)
+      end
+
+      it 'creates list with proper name' do 
+        expect{enlist_with_new_name}.to change{@p.ad_lists.last.name}.to('tagada')
+      end
+
+      it 'adds the ad to the list' do 
+        expect{enlist_with_new_name}.to change{@p.ad_lists.last.ad_ids.include?(@a.id)}.from(false).to(true)
+      end
+
+    end
+
+    describe 'enlist with existing name' do 
+      it 'does NOT creates list' do 
+        expect{enlist_with_existing_name}.to change{@p.ad_lists.count}.by(0)
+      end
+      it 'adds the ad to the list' do 
+        expect{enlist_with_existing_name}.to change{@p.ad_lists.find_by(name: 'archived').ad_ids.include?(@a.id)}.from(false).to(true)
+      end
+    end
+    
+    describe 'enlist with id' do 
+      it 'does NOT creates list' do 
+        expect{enlist_with_id}.to change{@p.ad_lists.count}.by(0)
+      end
+      it 'adds the ad to the list' do 
+        expect{enlist_with_id}.to change{@p.ad_lists.find_by(name: 'archived').ad_ids.include?(@a.id)}.from(false).to(true)
+      end
+    end
+
+  end
+
 end

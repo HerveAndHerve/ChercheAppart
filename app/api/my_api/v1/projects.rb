@@ -66,6 +66,18 @@ module MyApi
             end
             #}}}
 
+            #{{{ add to list
+            desc "add an ad to a project's list"
+            params do 
+              requires :list_name_or_id, desc: "either the id of the list, or a name"
+              requires :ad_id, desc: "the id of the ad to enlist"
+            end
+            post :enlist do 
+              ad = Ad.find(params[:ad_id]) || error!("ad not found",404)
+              @project.enlist_ad!(ad, params[:list_name_or_id])
+            end
+            #}}}
+
           end
 
           namespace 'lists' do 
@@ -78,6 +90,7 @@ module MyApi
             end
             #}}}
 
+
             namespace ':list_id' do 
               before do 
                 @list = @project.ad_lists.find(params[:list_id]) || error!("not found",404)
@@ -86,6 +99,29 @@ module MyApi
               #{{{ get an ad_list details
               get do 
                 present :list, @list, with: MyApi::Entities::AdList, complete: true
+              end
+              #}}}
+
+              #{{{ delete list
+              desc "delete a list"
+              delete do 
+                @list.destroy
+                present :status, :destroyed
+              end
+              #}}}
+
+              #{{{ update
+              desc "updates a list name"
+              params do 
+                requires :name, desc: "new list name"
+              end
+              put do 
+                if @list.update_attributes(name: params[:name])
+                  present :list, @list, with: MyApi::Entities::AdList
+                  present :status, :changed
+                else
+                  error!(@list.errors)
+                end
               end
               #}}}
 

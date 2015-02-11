@@ -39,20 +39,24 @@ class Project
     ads
   end
 
+  def enlist_ad!(ad,list_name_or_id)
+    raise "#{ad} is not an Ad" unless ad.is_a? Ad
+    ad_lists.each{|al| al.ad_ids.delete(ad.id) ; al.save}
+    list = ad_lists.find(list_name_or_id) || ad_lists.find_or_create_by(name: list_name_or_id)
+    list.ad_ids << ad.id
+    list.save
+  end
+
   private
 
   def set_default_lists
-    if ad_lists.empty?
-      %w(interesting to_contact waiting appointment_taken folder_given accepted refused).each do |k|
-        AdList.create(name: k, project: self)
-      end
+    %w(archived interesting to_contact waiting appointment_taken folder_given accepted refused).each do |k|
+      AdList.create(name: k, project: self) unless ad_lists.where(name: k).exists?
     end
   end
 
   def set_default_criteria
-    if !search_criteria
-      self.search_criteria = SearchCriteria.new
-    end
+    self.search_criteria = SearchCriteria.new unless !!search_criteria
   end
 
 end

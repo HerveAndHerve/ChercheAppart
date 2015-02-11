@@ -97,6 +97,7 @@ module MyApi
               end
 
               #{{{ get an ad_list details
+              desc "get a list details"
               get do 
                 present :list, @list, with: MyApi::Entities::AdList, complete: true
               end

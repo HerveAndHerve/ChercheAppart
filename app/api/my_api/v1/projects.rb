@@ -44,6 +44,8 @@ module MyApi
               ])
               @project.search_criteria.update_attributes(p)
             end
+
+            present :project, @project, with: MyApi::Entities::Project
           end
           #}}}
 

@@ -2,12 +2,16 @@ class AdList
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  embedded_in :project
+  embedded_in :project, touch: true
 
   field :name
   field :ad_ids, type: Array, default: []
 
   def ads
-    Ad.where(id: ad_ids)
+    Ad.any_in(id: ad_ids)
+  end
+
+  def ads_count
+    ad_ids.size
   end
 end

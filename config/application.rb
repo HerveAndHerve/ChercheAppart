@@ -16,6 +16,7 @@ Bundler.require(*Rails.groups)
 module ChercheAppart
   class Application < Rails::Application
 
+    config.autoload_paths << Rails.root.join('lib')
     config.to_prepare do 
       DeviseController.respond_to :json
     end

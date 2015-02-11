@@ -14,10 +14,20 @@ RSpec.configure do |config|
   end
 
   config.infer_spec_type_from_file_location!
+
+  config.before(:each) do 
+    Mongoid.purge!
+  end
 end
 
-def json_response
+def parsed_response
   JSON.parse(@response.body)
+end
+
+def sign_up_and_login!
+  @user = FactoryGirl.create(:user)
+  login(@user)
+  @user
 end
 
 def login(user)

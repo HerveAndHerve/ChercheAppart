@@ -27,6 +27,7 @@ end
 group :test, :development do 
   gem 'byebug'
   gem 'pry'
+  gem 'pry-rails'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'guard-rspec'
@@ -55,3 +56,5 @@ gem 'thor'
 gem 'devise'
 gem 'omniauth-google-oauth2'
 gem 'figaro'
+
+gem 'nokogiri'

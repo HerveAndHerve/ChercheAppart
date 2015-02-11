@@ -31,7 +31,7 @@ describe MyApi::V1::Users do
     it "signs in" do 
       expect{sign_in}.to change{
         get 'api/users/me'
-        json_response.has_key?("user")
+        parsed_response.has_key?("user")
       }.from(false).to(true)
     end
   end

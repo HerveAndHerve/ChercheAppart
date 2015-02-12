@@ -10,7 +10,7 @@ class User
   field :first_name, type: String, default: ""
   field :last_name, type: String, default: ""
   field :moves_count, type: Integer, default: 0
-  field :allowed_moves_limit, type: Integer, default: ENV["FREE_MOVES_LIMIT"].to_i
+  field :allowed_moves_limit, type: Integer, default: (ENV["FREE_MOVES_LIMIT"] || 20).to_i
 
   has_and_belongs_to_many :projects, class_name: "Project", inverse_of: :owners
 

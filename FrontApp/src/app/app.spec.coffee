@@ -10,6 +10,9 @@ describe 'App Module', ()->
       $rootScope = _$rootScope_
 
     it 'Should redirect to the landing', () ->
-      $location.path 'qsdq qdfqsdf qsdf qsd'
+      $location.path 'qsdfqsdfqsdf'
       $rootScope.$digest()
-      expect( $state.current.url ).toBe '/landing'
+      expect( $state.current.views.main.controller ).toBe( 'LandingController' )
+
+
+      

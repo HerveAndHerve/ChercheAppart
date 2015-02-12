@@ -21,27 +21,8 @@ div.big-padding
         name="name"
       )
 
-    md-input-container
-      label Distance max depuis la ville de référence : 
-        span.text-cyan {{ (project.max_distance || 0) / 1000 | number }} km
-    md-slider( flex, step="10000", min="0", max="1500000", ng-model="project.max_distance", class="md-accent")
-
-    md-input-container
-      label Surface min : 
-        span.text-cyan  {{ project.min_surface | number }} m
-          sup 2
-    md-slider( flex, min="0", step="10", max="100000", ng-model="project.min_surface", class="md-accent")
-
-    md-input-container
-      label Surface max : 
-        span.text-cyan  {{ project.max_surface | number }} m
-          sup 2
-    md-slider( flex, step="10", min="0", max="100000", ng-model="project.max_surface", class="md-accent")
-
     div( layout, layout-align="end", style="margin-top: 30px" )
       md-button.md-raised.md-warn( 
         ng-click="createProject()"
       )
         | Créer le projet
-
-

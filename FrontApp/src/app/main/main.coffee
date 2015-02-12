@@ -4,7 +4,7 @@ do (app=angular.module "trouverDesTerrains.main", [
 ]) ->
   app.config ['$stateProvider', ($stateProvider) ->
     $stateProvider.state 'main',
-      url: '/'
+      url: ''
       abstract: 'true'
       views:
         "main":

@@ -1,6 +1,7 @@
 do (app=angular.module "trouverDesTerrains.landing", [
   'ui.router'
   'templates'
+  'security'
 ]) ->
   app.config ['$stateProvider', ($stateProvider) ->
     $stateProvider.state 'landing',
@@ -8,7 +9,7 @@ do (app=angular.module "trouverDesTerrains.landing", [
       views:
         "main":
           controller: 'LandingController'
-          templateUrl: '/app/landing/landing.html'
+          templateUrl: 'app/landing/landing.html'
       data:
         pageTitle: 'Accueil'
   ]
@@ -20,8 +21,8 @@ do (app=angular.module "trouverDesTerrains.landing", [
       $scope.Auth = Auth
 
       onSuccess = (success)->
-        if success
-            $state.go 'main.projects.list'
+        if success.id
+          $state.go 'main.projects'
       Auth.getCurrentUser().then onSuccess
 
       $scope.authenticate = ()->

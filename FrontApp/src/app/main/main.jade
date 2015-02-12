@@ -7,7 +7,7 @@ md-sidenav.md-whiteframe-z2(
         ng-click="toggleLeftNav()"
         style="cursor: pointer"
       )
-      span.pacifico( ui-sref="main.projects.list" )  &nbsp; &nbsp; Terrains à construire
+      span.pacifico( ui-sref="main.projects" )  &nbsp; &nbsp; Cherche ton appart 
 
   md-content
     md-subheader.md-primary navigation
@@ -15,12 +15,12 @@ md-sidenav.md-whiteframe-z2(
       md-item
         md-item-content 
           div.md-tile-content 
-            span( ui-sref="main.projects.list", ng-click="toggleLeftNav()" )  mes projets
+            span( ui-sref="main.projects", ng-click="toggleLeftNav()" )  mes projets
       md-item
         md-item-content 
           div.md-tile-content
             span.fa.fa-plus 
-            span(ui-sref="main.projects.new", ng-click="toggleLeftNav()")  nouveau projet
+            span(ui-sref="main.newProject", ng-click="toggleLeftNav()")  nouveau projet
       md-item
         md-divider
         md-item-content
@@ -31,12 +31,12 @@ div.full-height( layout="column", layout-fill )
   md-toolbar.md-primary( style="position: relative" )
     h1.md-toolbar-tools 
       span.fa.fa-bars( ng-click="toggleLeftNav()", style="cursor: pointer" )
-      a.pacifico( ui-sref="main.projects.list" )  &nbsp; &nbsp; Terrains à construire
+      a.pacifico( ui-sref="main.projects" )  &nbsp; &nbsp; Cherche ton appart 
       div( ui-view="title" ) 
 
   md-toolbar( 
     style="min-height: 55px"
-    ng-show="$state.includes('main.projects.detail')"
+    ng-show="$state.includes('main.project')"
   )
     md-tabs( 
       class="md-whiteframe-z1 md-white-theme"
@@ -49,7 +49,7 @@ div.full-height( layout="column", layout-fill )
       )
         md-tab-label 
           span.fa.fa-archive
-          span( hide-sm )  archivés
+          span( hide-sm ) archivés
 
       md-tab( 
         md-active="$state.current.name == 'main.projects.detail.new'" 
@@ -57,7 +57,7 @@ div.full-height( layout="column", layout-fill )
       )
         md-tab-label 
           span.fa.fa-home
-          span( hide-sm )  non classés
+          span( hide-sm ) nouveaux 
 
       md-tab.md-right-tab( 
         md-active="$state.current.name == 'main.projects.detail.favourite'"
@@ -65,7 +65,7 @@ div.full-height( layout="column", layout-fill )
       )
         md-tab-label
           span.fa.fa-star
-          span( hide-sm )  intéressants
+          span( hide-sm ) en cours
 
 
   md-content(class="full-width full-height grey-bg landing-background")

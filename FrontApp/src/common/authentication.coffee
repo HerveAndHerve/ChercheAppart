@@ -26,7 +26,6 @@ do (app=angular.module "security", [
 
         logout: ->
           onSuccess = (success)->
-            @currentUser = null
             $state.go 'landing'
           Restangular.all('users').all('sign_out').customGET().then onSuccess
   ])

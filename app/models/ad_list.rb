@@ -6,6 +6,7 @@ class AdList
 
   field :name
   field :ad_ids, type: Array, default: []
+  field :hidden, type: Boolean
 
   def ads
     Ad.any_in(id: ad_ids)

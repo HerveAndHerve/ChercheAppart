@@ -66,17 +66,48 @@ module MyApi
             end
             #}}}
 
-            #{{{ add to list
-            desc "add an ad to a project's list"
-            params do 
-              requires :list_name_or_id, desc: "either the id of the list, or a name"
-              requires :ad_id, desc: "the id of the ad to enlist"
+            namespace ':ad_id' do
+              before do
+                @ad = Ad.find(params[:ad_id]) || error!("ad not found",404)
+                params do 
+                  requires :ad_id, desc: "the id of the ad"
+                end
+              end
+
+              #{{{ add to list
+              desc "add an ad to a project's list"
+              params do 
+                requires :list_name_or_id, desc: "either the id of the list, or a name"
+              end
+              post :enlist do 
+                @project.enlist_ad!(@ad, params[:list_name_or_id])
+              end
+              #}}}
+
+              #{{{ remove from list
+              desc "remove an ad from a list"
+              params do 
+                requires :list_name_or_id, desc: "either the id of the list, or a name"
+              end
+              post :unlist do 
+                @project.unlist_ad!(@ad, params[:list_name_or_id])
+              end
+              #}}}
+
+              #{{{ archive
+              desc "archive this ad"
+              post :archive do
+                @project.enlist_ad!(@ad,'archived')
+              end
+              #}}}
+
+              #{{{ unarchive
+              desc "unarchive this ad"
+              post :unarchive do
+                @project.unlist_ad!(@ad,'archived')
+              end
+              #}}}
             end
-            post :enlist do 
-              ad = Ad.find(params[:ad_id]) || error!("ad not found",404)
-              @project.enlist_ad!(ad, params[:list_name_or_id])
-            end
-            #}}}
 
           end
 
@@ -85,7 +116,7 @@ module MyApi
             #{{{ index lists
             desc "get an index of this project's lists"
             get do 
-              lists = @project.ad_lists
+              lists = @project.public_ad_lists
               present :lists, lists, with: MyApi::Entities::AdList
             end
             #}}}
@@ -93,7 +124,7 @@ module MyApi
 
             namespace ':list_id' do 
               before do 
-                @list = @project.ad_lists.find(params[:list_id]) || error!("not found",404)
+                @list = @project.public_ad_lists.find(params[:list_id]) || error!("not found",404)
               end
 
               #{{{ get an ad_list details

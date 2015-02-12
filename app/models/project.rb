@@ -47,11 +47,22 @@ class Project
     list.save
   end
 
+  def unlist_ad!(ad,list_name_or_id)
+    raise "#{ad} is not an Ad" unless ad.is_a? Ad
+    list = ad_lists.find(list_name_or_id) || ad_lists.find_by(name: list_name_or_id) || (return nil)
+    list.ad_ids.delete(ad.id)
+    list.save
+  end
+
+  def public_ad_lists
+    ad_lists.where(hidden: false)
+  end
+
   private
 
   def set_default_lists
     %w(archived interesting to_contact waiting appointment_taken folder_given accepted refused).each do |k|
-      AdList.create(name: k, project: self) unless ad_lists.where(name: k).exists?
+      AdList.create(name: k, project: self, hidden: (k == 'archived')) unless ad_lists.where(name: k).exists?
     end
   end
 

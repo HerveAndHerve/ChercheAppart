@@ -3,6 +3,7 @@ module StripeForUsers
 
   included do 
     field :stripe_id
+    field :last_charged, type: DateTime
 
     # Finds or create a stripe customer object associated to the user
     def stripe
@@ -24,10 +25,16 @@ module StripeForUsers
     end
 
     def paid_this_month?
+      return false if last_charged.blank?
+      last_charged + 1.month > Time.now
     end
 
     def has_valid_payment_or_subscription?
       paid_this_month? or has_valid_subscription?
+    end
+
+    def update_last_charge_datetime!
+      self.update_attribute(:last_charged, Time.now)
     end
 
   end

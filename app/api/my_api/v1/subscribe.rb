@@ -20,8 +20,36 @@ module MyApi
         end
         #}}}
 
+        #{{{ charge price
+        desc "get the current price for a one-time month subscription"
+        get 'one_month_price' do
+          present :price_in_euro, ENV['ONE_TIME_SUBSCRIPTION_PRICE_IN_EURO'].to_i
+        end
+        #}}}
+
+        #{{{ charge card
+        desc "charge a customer to get one month of unlimited moves"
+        params do
+          requires :stripeToken, type: String, desc: "user's stripe token. required if the user subscribes for the first time, optional otherwise"
+        end
+        post :one_time_charge do
+          sign_in!
+          begin
+            c = Stripe::Charge.create(
+              amount: ENV['ONE_TIME_SUBSCRIPTION_PRICE_IN_EURO'].to_i * 100,
+              currency: 'eur',
+              card: params[:stripeToken],
+              description: "charge for #{current_user.email}",
+            )
+            current_user.update_last_charge_datetime!
+          rescue => e
+            error!(e.message)
+          end
+        end
+        #}}}
+
         #{{{ subscribe to a plan
-        desc "subscribe to a plan"
+        desc "subscribe to a recurring plan"
         params do 
           optional :stripeToken, type: String, desc: "user's stripe token. required if the user subscribes for the first time, optional otherwise"
           requires :plan_id, type: String, desc: "id of the plan you want to subscribe to"
@@ -103,6 +131,7 @@ module MyApi
           present :status, :deactivated
         end
         #}}}
+
 
       end
     end

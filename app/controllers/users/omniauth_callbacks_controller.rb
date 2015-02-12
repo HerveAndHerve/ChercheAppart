@@ -1,7 +1,16 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+
+  def facebook
+    @user = User.find_for_facebook(request.env["omniauth.auth"])
+    main
+  end
+
   def google_oauth2
     @user = User.find_for_google_oauth2(request.env["omniauth.auth"])
+    main
+  end
 
+  def main
     if @user.persisted?
 
       auth = request.env['omniauth.auth']
@@ -12,4 +21,5 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       redirect_to new_user_registration_url
     end
   end
+
 end

@@ -1,7 +1,13 @@
 class User
   include Mongoid::Document
   include GoogleOmniauth
+  include Facebookable
 
+  field :image
+  field :provider
+  field :uid
+  field :first_name, type: String, default: ""
+  field :last_name, type: String, default: ""
 
   has_and_belongs_to_many :projects, class_name: "Project", inverse_of: :owners
 
@@ -9,7 +15,7 @@ class User
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :rememberable, :trackable
-  devise :omniauthable, omniauth_providers: [:google_oauth2]
+  devise :omniauthable, omniauth_providers: [:google_oauth2, :facebook]
 
   ## Database authenticatable
   field :email,              type: String, default: ""

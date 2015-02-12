@@ -59,14 +59,29 @@ gulp.task 'clean', ['clean:bin', 'clean:build']
 # ------------------------------------ #
 # ------------- build ---------------- #
 # ------------------------------------ #
+
+gulp.task 'build:index', ->
+	gulp.src globs.index
+    .pipe plumber()
+    .pipe jade({ pretty : true })
+    .pipe gulp.dest(build_dir)
+
 gulp.task 'build:jade', ->
 	gulp.src globs.jade
     .pipe plumber()
     .pipe jade({ pretty : true })
     .pipe gulp.dest(build_dir)
+    .pipe templateCache()
+    .pipe gulp.dest(build_app_dir)
     .pipe connect.reload()
 
 gulp.task 'build:index', ->
+  gulp.src globs.index
+    .pipe plumber()
+    .pipe jade({ pretty: true })
+    .pipe gulp.dest( build_dir )
+
+gulp.task 'build:inject', ->
   gulp.src 'build/index.html'
     .pipe plumber()
     .pipe inject(gulp.src(globs.app, { read : false }), { ignorePath : ['build'], addRootSlash : false })
@@ -198,9 +213,9 @@ gulp.task 'watch', ()->
 gulp.task 'build', ()->
   runSequence(
     'clean:build'
-    ['build:vendor', 'build:sass', 'build:assets', 'build:coffee', 'build:jade']
+    ['build:vendor', 'build:sass', 'build:assets', 'build:coffee', 'build:jade', 'build:index']
     'build:templateCache'
-    'build:index'
+    'build:inject'
     'run:karmaonce'
   )
 
@@ -209,7 +224,7 @@ gulp.task 'compile', ()->
   runSequence(
     'clean:build'
     'clean:bin'
-    ['build:vendor', 'build:sass', 'build:assets', 'build:coffee', 'build:jade']
+    ['build:vendor', 'build:sass', 'build:assets', 'build:coffee', 'build:jade', 'build:index']
     'build:templateCache'
     ['compile:assets', 'compile:javascript', 'compile:css']
     'compile:index'
@@ -220,9 +235,9 @@ gulp.task 'compile', ()->
 gulp.task 'test', ()->
   runSequence(
     'clean:build'
-    ['build:vendor', 'build:sass', 'build:assets', 'build:coffee', 'build:jade']
+    ['build:vendor', 'build:sass', 'build:assets', 'build:coffee', 'build:jade', 'build:index']
     'build:templateCache'
-    'build:index'
+    'build:inject'
     'run:karmaonce'
   )
 
@@ -230,9 +245,9 @@ gulp.task 'test', ()->
 gulp.task 'default', ->
   runSequence(
     'clean:build'
-    ['build:vendor', 'build:sass', 'build:assets', 'build:coffee', 'build:jade']
+    ['build:vendor', 'build:sass', 'build:assets', 'build:coffee', 'build:jade', 'build:index']
     'build:templateCache'
-    'build:index'
+    'build:inject'
     'run:karmaonce'
     ['connect', 'watch']
   )

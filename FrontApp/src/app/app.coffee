@@ -16,7 +16,7 @@ do (app=angular.module "trouverDesTerrains", [
     '$mdThemingProvider',
     ($mdThemingProvider)->
       $mdThemingProvider.theme('default')
-        .primaryColor('deep-purple')
+        .primaryColor('indigo')
         .accentColor('cyan')
         .warnColor('pink')
   ])

@@ -4,7 +4,10 @@ globs = {}
 # ---------------- src --------------- #
 # ------------------------------------ #
 globs.coffee = 'src/**/*.coffee'
-globs.jade = 'src/**/*.jade'
+globs.jade = [
+  'src/**/*.jade'
+  '!src/index.jade'
+]
 globs.src = 'src/**/*'
 globs.assets = 'src/assets/**/*'
 globs.index = "src/index.jade"

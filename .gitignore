@@ -27,8 +27,8 @@ config/initializers/secret_token.rb
 
 # if using bower-rails ignore default bower_components path bower.json files
 /vendor/assets/bower_components
-*.bowerrc
-bower.json
+#*.bowerrc
+#bower.json
 #config/mongoid.yml
 *.swp
 

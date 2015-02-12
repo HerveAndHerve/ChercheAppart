@@ -70,6 +70,11 @@ md-tabs.md-white-theme {
   }
 }
 
+$indigo: rgb(63,81,181);
+.text-indigo {
+  color: $indigo;
+}
+
 md-tabs.md-white-theme md-tabs-ink-bar {
   color: $pink !important;
   background: $pink !important;

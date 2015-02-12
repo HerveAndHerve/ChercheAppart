@@ -1,8 +1,6 @@
 div.big-padding
-  md-subheader.md-accent Définissez vos critères de recherche
-
+  md-subheader.md-primary Définissez vos critères de recherche
   md-content.md-padding
-
     md-input-container
       label Nom du projet
       input(
@@ -25,7 +23,7 @@ div.big-padding
 
     md-input-container
       label Distance max depuis la ville de référence : 
-        span.text-cyan  {{ (project.max_distance || 0) / 1000 | number }} km
+        span.text-cyan {{ (project.max_distance || 0) / 1000 | number }} km
     md-slider( flex, step="10000", min="0", max="1500000", ng-model="project.max_distance", class="md-accent")
 
     md-input-container

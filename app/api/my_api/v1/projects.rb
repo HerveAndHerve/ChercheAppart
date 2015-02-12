@@ -1,6 +1,7 @@
 module MyApi
   module V1
     class Projects < Grape::API
+      helpers MyApi::Helpers::ProjectsHelper
       format :json
 
       namespace :projects do 
@@ -80,7 +81,7 @@ module MyApi
                 requires :list_name_or_id, desc: "either the id of the list, or a name"
               end
               post :enlist do 
-                @project.enlist_ad!(@ad, params[:list_name_or_id])
+                try_if_authorized { current_user.enlist_ad!(@project, @ad, params[:list_name_or_id]) }
               end
               #}}}
 
@@ -90,21 +91,21 @@ module MyApi
                 requires :list_name_or_id, desc: "either the id of the list, or a name"
               end
               post :unlist do 
-                @project.unlist_ad!(@ad, params[:list_name_or_id])
+                try_if_authorized { current_user.unlist_ad!(@project, @ad, params[:list_name_or_id]) }
               end
               #}}}
 
               #{{{ archive
               desc "archive this ad"
               post :archive do
-                @project.enlist_ad!(@ad,'archived')
+                try_if_authorized { current_user.enlist_ad!(@project, @ad,'archived') }
               end
               #}}}
 
               #{{{ unarchive
               desc "unarchive this ad"
               post :unarchive do
-                @project.unlist_ad!(@ad,'archived')
+                try_if_authorized { current_user.unlist_ad!(@project, @ad,'archived') }
               end
               #}}}
             end

@@ -77,48 +77,68 @@ describe MyApi::V1::Projects do
     subject(:archive) {post "/api/projects/#{@p.id}/ads/#{@a.id}/archive" ; @p.reload}
     subject(:unarchive) {post "/api/projects/#{@p.id}/ads/#{@a.id}/unarchive" ; @p.reload}
 
-    describe 'enlist with new name' do 
+    context('when free moves are available') do
+      describe 'enlist with new name' do 
 
-      it 'creates list' do 
-        expect{enlist_with_new_name}.to change{@p.ad_lists.count}.by(1)
+        it 'creates list' do 
+          expect{enlist_with_new_name}.to change{@p.ad_lists.count}.by(1)
+        end
+
+        it 'creates list with proper name' do 
+          expect{enlist_with_new_name}.to change{@p.ad_lists.last.name}.to('tagada')
+        end
+
+        it 'adds the ad to the list' do 
+          expect{enlist_with_new_name}.to change{@p.ad_lists.last.ad_ids.include?(@a.id)}.from(false).to(true)
+        end
+
       end
 
-      it 'creates list with proper name' do 
-        expect{enlist_with_new_name}.to change{@p.ad_lists.last.name}.to('tagada')
+      describe 'enlist with existing name' do 
+        it 'does NOT creates list' do 
+          expect{enlist_with_existing_name}.to change{@p.ad_lists.count}.by(0)
+        end
+        it 'adds the ad to the list' do 
+          expect{enlist_with_existing_name}.to change{@p.ad_lists.find_by(name: 'interesting').ad_ids.include?(@a.id)}.from(false).to(true)
+        end
       end
 
-      it 'adds the ad to the list' do 
-        expect{enlist_with_new_name}.to change{@p.ad_lists.last.ad_ids.include?(@a.id)}.from(false).to(true)
+      describe 'enlist with id' do 
+        it 'does NOT creates list' do 
+          expect{enlist_with_id}.to change{@p.ad_lists.count}.by(0)
+        end
+        it 'adds the ad to the list' do 
+          expect{enlist_with_id}.to change{@p.ad_lists.find_by(name: 'interesting').ad_ids.include?(@a.id)}.from(false).to(true)
+          expect{unlist_with_id}.to change{@p.ad_lists.find_by(name: 'interesting').ad_ids.include?(@a.id)}.from(true).to(false)
+        end
+      end
+
+      describe 'archive' do
+        it 'archives' do
+          expect{archive}.to change{@p.ad_lists.find_by(name: 'archived').ad_ids.include?(@a.id)}.from(false).to(true)
+          expect{unarchive}.to change{@p.ad_lists.find_by(name: 'archived').ad_ids.include?(@a.id)}.from(true).to(false)
+        end
       end
 
     end
+    context("when no free moves are available") do
+      before do 
+        @user.update_attribute(:allowed_moves_limit, 0)
+      end
 
-    describe 'enlist with existing name' do 
-      it 'does NOT creates list' do 
-        expect{enlist_with_existing_name}.to change{@p.ad_lists.count}.by(0)
+      it "won't archive" do
+        archive
+        expect(response.status).to eq 403
+        expect(parsed_response["error"]).to eq "quota_excedeed"
       end
-      it 'adds the ad to the list' do 
-        expect{enlist_with_existing_name}.to change{@p.ad_lists.find_by(name: 'interesting').ad_ids.include?(@a.id)}.from(false).to(true)
-      end
-    end
-    
-    describe 'enlist with id' do 
-      it 'does NOT creates list' do 
-        expect{enlist_with_id}.to change{@p.ad_lists.count}.by(0)
-      end
-      it 'adds the ad to the list' do 
-        expect{enlist_with_id}.to change{@p.ad_lists.find_by(name: 'interesting').ad_ids.include?(@a.id)}.from(false).to(true)
-        expect{unlist_with_id}.to change{@p.ad_lists.find_by(name: 'interesting').ad_ids.include?(@a.id)}.from(true).to(false)
-      end
-    end
-    
-    describe 'archive' do
-      it 'archives' do
-        expect{archive}.to change{@p.ad_lists.find_by(name: 'archived').ad_ids.include?(@a.id)}.from(false).to(true)
-        expect{unarchive}.to change{@p.ad_lists.find_by(name: 'archived').ad_ids.include?(@a.id)}.from(true).to(false)
-      end
-    end
 
+      it "won't enlist" do
+        enlist_with_new_name
+        expect(response.status).to eq 403
+        expect(parsed_response["error"]).to eq "quota_excedeed"
+      end
+
+    end
   end
 
 end

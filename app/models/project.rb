@@ -39,21 +39,6 @@ class Project
     ads
   end
 
-  def enlist_ad!(ad,list_name_or_id)
-    raise "#{ad} is not an Ad" unless ad.is_a? Ad
-    ad_lists.each{|al| al.ad_ids.delete(ad.id) ; al.save}
-    list = ad_lists.find(list_name_or_id) || ad_lists.find_or_create_by(name: list_name_or_id)
-    list.ad_ids << ad.id
-    list.save
-  end
-
-  def unlist_ad!(ad,list_name_or_id)
-    raise "#{ad} is not an Ad" unless ad.is_a? Ad
-    list = ad_lists.find(list_name_or_id) || ad_lists.find_by(name: list_name_or_id) || (return nil)
-    list.ad_ids.delete(ad.id)
-    list.save
-  end
-
   def public_ad_lists
     ad_lists.where(hidden: false)
   end

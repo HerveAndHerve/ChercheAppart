@@ -3,6 +3,7 @@ module MyApi
     class Ad < Grape::Entity
       expose :id
       expose :url
+      expose :active_url
       expose :surface
       expose :price
       expose :provider

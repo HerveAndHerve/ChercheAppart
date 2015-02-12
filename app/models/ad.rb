@@ -4,6 +4,7 @@ class Ad
 
   field :name
   field :url
+  field :active_url, default: true
   field :provider
   field :district, type: String
 
@@ -17,5 +18,12 @@ class Ad
   validates_uniqueness_of :url
 
   index({ url: 1},{sparse: false, unique: true, name: 'url_land_index'})
+
+  def check_url!
+    active = ( ( Faraday.head(url).status != 404 ) rescue false)
+    self.active_url = active
+    self.save if self.changed?
+    return active
+  end
 
 end

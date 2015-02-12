@@ -25,6 +25,7 @@ class Project
   def new_ads
     s = search_criteria
     ads = Ad
+    .where(active_url: true)
     .gte(surface: s.min_surface)
     .lte(surface: s.max_surface)
     .gte(price: s.min_price)

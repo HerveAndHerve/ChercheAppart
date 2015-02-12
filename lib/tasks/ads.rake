@@ -9,6 +9,13 @@ namespace :ads do
 
   #end
 
+  desc "check if the urls are still active"
+  task check_urls: :environment do
+    Ad.each do |ad|
+      ad.delay.check_url!
+    end
+  end
+
   desc "get seloger.com ads"
   task seloger: :environment do 
     puts "fetching ads from seloger.com"

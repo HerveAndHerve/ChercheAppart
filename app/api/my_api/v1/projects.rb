@@ -16,6 +16,25 @@ module MyApi
         end
         #}}}
 
+        #{{{ create
+        desc "create a project"
+        params do
+          requires :name, type: String, desc: "the name of the project"
+        end
+        post do 
+          p = Project.new(
+            owners: [current_user],
+            name: params[:name],
+          )
+
+          if p.save
+            present :project, p, with: MyApi::Entities::Project
+          else
+            error!(p.errors)
+          end
+        end
+        #}}}
+
         namespace ':project_id' do 
           before do 
             @project = current_user.projects.find(params[:project_id]) || error!("not found",404)

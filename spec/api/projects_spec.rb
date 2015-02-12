@@ -24,12 +24,34 @@ describe MyApi::V1::Projects do
   end
   #}}}
 
+  #{{{ create
+  describe :create do
+    before do 
+      sign_up_and_login!
+    end
+
+    subject(:post_create) { post 'api/projects', {name: 'tagada'} }
+
+    it 'creates project' do 
+      expect{post_create}.to change{Project.count}.by(1)
+    end
+
+    it 'assigns project to current user' do
+      post_create
+      assert(Project.last.owners.include?(@user))
+    end
+  end
+  #}}}
+
   #{{{ udpate
   describe :update do 
     before do
       sign_up_and_login!
       @project = FactoryGirl.build(:project)
       @project.owners << @user
+      @project.save
+      @user.save
+      @user.reload
     end
     let(:ps) {
       {
@@ -44,7 +66,7 @@ describe MyApi::V1::Projects do
       }
     }
 
-    subject(:update) { put "api/projects/#{@project.id}", ps ; @project.reload ; @project.search_criteria.reload}
+    subject(:update) { put "api/projects/#{@project.id}", ps ; @project.reload ; @project.search_criteria.reload }
 
     it 'update updates criteria' do 
       expect{update}.to change{@project.search_criteria.attributes.slice(*ps[:search_criteria].keys)}.to(ps[:search_criteria])
@@ -59,6 +81,7 @@ describe MyApi::V1::Projects do
 
   #}}}
 
+  #{{{ enlist
   describe :enlist_ad do 
     before do 
       sign_up_and_login!
@@ -140,5 +163,6 @@ describe MyApi::V1::Projects do
 
     end
   end
+  #}}}
 
 end

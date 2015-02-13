@@ -207,7 +207,9 @@ module MyApi
                 optional :nstop, type: Integer, default: -1, desc: "last ad to show (default -1 to show everything)"
               end
               get :ads do 
-                present :list, @list.ads[params[:nstart]..params[:nstop]], with: MyApi::Entities::Ad
+                present :list_name, @list.name
+                present :total_count, @list.ads.count
+                present :ads, @list.ads[params[:nstart]..params[:nstop]], with: MyApi::Entities::Ad
               end
               #}}}
 

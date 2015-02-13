@@ -20,17 +20,34 @@ module MyApi
         desc "create a project"
         params do
           requires :name, type: String, desc: "the name of the project"
+          optional :search_criteria, type: Hash do 
+            optional :min_surface, desc: "in squared meters"
+            optional :max_surface, desc: "in squared meters"
+            optional :min_price  , desc: "in euros"
+            optional :max_price  , desc: "in euros"
+            optional :district   , desc: "Postal code. ex: 75012"
+          end
         end
         post do 
           p = Project.new(
-            owners: [current_user],
             name: params[:name],
           )
 
           if p.save
-            present :project, p, with: MyApi::Entities::Project
-          else
-            error!(p.errors)
+            p.owners << current_user
+            unless params[:search_criteria].blank?
+              h = ActionController::Parameters.new(params[:search_criteria]).permit([
+                :min_surface,
+                :max_surface,
+                :min_price,
+                :max_price,
+                :district,
+              ])
+              p.search_criteria.update_attributes(h) or error!(@project.errors)
+              present :project, p, with: MyApi::Entities::Project
+            else
+              error!(p.errors)
+            end
           end
         end
         #}}}

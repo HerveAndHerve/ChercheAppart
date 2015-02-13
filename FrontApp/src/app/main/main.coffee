@@ -1,6 +1,7 @@
 do (app=angular.module "trouverDesTerrains.main", [
   'ui.router'
   'trouverDesTerrains.projets'
+  'trouverDesTerrains.ad'
 ]) ->
   app.config ['$stateProvider', ($stateProvider) ->
     $stateProvider.state 'main',

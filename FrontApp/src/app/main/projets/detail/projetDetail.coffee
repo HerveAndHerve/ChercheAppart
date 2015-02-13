@@ -12,7 +12,7 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
         url: '/new'
         views:
           "main@main":
-            templateUrl: 'app/main/projets/detail/ads.html'
+            templateUrl: '/app/main/projets/detail/ads.html'
             controller: 'AdsController'
         resolve:
           ads: [
@@ -25,7 +25,7 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
         url: '/archives'
         views:
           "main@main":
-            templateUrl: 'app/main/projets/detail/ads.html'
+            templateUrl: '/app/main/projets/detail/ads.html'
             controller: 'AdsController'
         resolve:
           ads: [
@@ -38,7 +38,7 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
         url: '/categories'
         views:
           "main@main":
-            templateUrl: 'app/main/projets/detail/categories.html'
+            templateUrl: '/app/main/projets/detail/categories.html'
             controller: 'CategoriesController'
         resolve:
           categories: [
@@ -49,8 +49,10 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
 
       .state 'main.project.categories.category',
         url: '/:categoryId'
-        templateUrl: 'app/main/project/detail/ads.html'
-        controller: 'AdsController'
+        views:
+          'main@main':
+            templateUrl: '/app/main/projets/detail/ads.html'
+            controller: 'AdsController'
         resolve:
           ads: [
             'ProjectResource', '$stateParams',
@@ -60,15 +62,22 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
   ]
 
   app.controller 'AdsController', [
-    '$scope', 'ads',
-    ($scope, ads) ->
+    '$scope', 'ads', '$state', '$stateParams', 'ProjectResource',
+    ($scope, ads, $state, $stateParams, ProjectResource) ->
+      $scope.selectAd = (ad)->
+        $state.go '.ad', projectId: $stateParams.projectId, adId: encodeURIComponent(ad.url)
       $scope.ads = ads.ads
+      $scope.interestingAd = (ad)->
+        ProjectResource.addAdToList( $stateParams.projectId, '54ddbf67416c65154a270000', ad.id )
+
+        
+
   ]
 
   app.controller 'CategoriesController', [
     '$scope', 'categories', '$state',
     ($scope, categories, $state) ->
-      $scope.categories = categories
+      $scope.categories = categories.lists
       $scope.selectCategory = (category)->
         $state.go 'main.project.categories.category', categoryId: category.id
   ]

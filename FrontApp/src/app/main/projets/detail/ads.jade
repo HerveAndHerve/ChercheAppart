@@ -1,7 +1,7 @@
 section
   div.md-subheader.md-default-theme
     div.md-subheader-content
-      h2 project 
+      h2 Annonces 
 
   md-list.lands-list( layout="column" )
     md-item( 
@@ -10,8 +10,17 @@ section
       md-divider
       md-item-content( style="background-color: white" )
         div.md-tile-left.md-image-tile
-          img( ng-src="{{ ad.img }}" )
-        div.md-tile-content
-          h3 lol
+          img( ng-src="{{ ad.img }}" style="width: 120px; margin: 10px")
+        div.md-tile-content( layout="row" layout-align="space-between center" )
+          div
+            h3( ng-click="selectAd(ad)" ) {{ ad.location }} - {{ ad.district }}
+            p {{ ad.description }}
+            p {{ ad.price }} &euro;
+            p {{ ad.surface | number }} m
+              sup 2
+          div( flex )
+          div
+            md-button.md-primary.md-raised( ng-click="interestingAd(ad)" )
+              span.fa.fa-star.fa-2x
 
 

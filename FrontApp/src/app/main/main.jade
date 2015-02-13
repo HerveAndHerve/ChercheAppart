@@ -44,28 +44,28 @@ div.full-height( layout="column", layout-fill )
       style="z-index: 3; position: relative; display: block"
     )
       md-tab.md-left-tab( 
-        md-active="$state.current.name == 'main.projects.detail.archived'"
-        md-on-select="$state.go('main.projects.detail.archived')"
+        md-active="$state.include('main.project.archived')"
+        md-on-select="$state.go('main.project.archived')"
       )
         md-tab-label 
           span.fa.fa-archive
-          span( hide-sm ) archivés
+          span( hide-sm )  archivés
 
       md-tab( 
-        md-active="$state.current.name == 'main.projects.detail.new'" 
-        md-on-select="$state.go('main.projects.detail.new')"
+        md-active="$state.current.name == 'main.project.news'" 
+        md-on-select="$state.go('main.project.news')"
       )
         md-tab-label 
           span.fa.fa-home
-          span( hide-sm ) nouveaux 
+          span( hide-sm )  nouveaux 
 
       md-tab.md-right-tab( 
-        md-active="$state.current.name == 'main.projects.detail.favourite'"
-        md-on-select="$state.go('main.projects.detail.favourite')"
+        md-active="$state.include('main.project.categories')"
+        md-on-select="$state.go('main.project.categories')"
       )
         md-tab-label
           span.fa.fa-star
-          span( hide-sm ) en cours
+          span( hide-sm )  en cours
 
 
   md-content(class="full-width full-height grey-bg landing-background")

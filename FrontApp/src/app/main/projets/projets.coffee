@@ -39,8 +39,8 @@ do (app=angular.module "trouverDesTerrains.projets", [
         getCategoryAds: (projectId, listId)->
           Restangular
             .one 'projects', projectId
-            .one 'list', listId
-            .customGET null
+            .one 'lists', listId
+            .customGET 'ads'
 
         getNewAds: (projectId)->
           Restangular
@@ -53,5 +53,13 @@ do (app=angular.module "trouverDesTerrains.projets", [
             .one 'projects', projectId
             .all 'ads'
             .customGET 'archived'
+
+        addAdToList: (projectId, listId, adId)->
+          params =
+            list_name_or_id: listId
+          Restangular
+            .one 'projects', projectId
+            .one 'ads', adId
+            .customPOST params, 'enlist'
 
   ]

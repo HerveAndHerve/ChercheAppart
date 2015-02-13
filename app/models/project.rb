@@ -51,7 +51,7 @@ class Project
   end
 
   def archived_ads_count
-    ad_lists.find(name: "archived").ads_count
+    ad_lists.find_or_create_by(name: "archived").ads_count
   end
 
   private

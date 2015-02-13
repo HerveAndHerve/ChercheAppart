@@ -18,6 +18,7 @@ concat = require('gulp-concat')
 rename = require('gulp-rename')
 gulpif = require('gulp-if')
 url = require('url')
+addsrc = require('gulp-add-src')
 proxy = require('proxy-middleware')
 templateCache = require('gulp-angular-templatecache')
 uglify = require('gulp-uglify')
@@ -71,28 +72,16 @@ gulp.task 'build:jade', ->
     .pipe plumber()
     .pipe jade({ pretty : true })
     .pipe gulp.dest(build_dir)
+    .pipe addsrc( globs.html )
     .pipe templateCache()
     .pipe gulp.dest(build_app_dir)
     .pipe connect.reload()
-
-gulp.task 'build:index', ->
-  gulp.src globs.index
-    .pipe plumber()
-    .pipe jade({ pretty: true })
-    .pipe gulp.dest( build_dir )
 
 gulp.task 'build:inject', ->
   gulp.src 'build/index.html'
     .pipe plumber()
     .pipe inject(gulp.src(globs.app, { read : false }), { ignorePath : ['build'], addRootSlash : false })
     .pipe gulp.dest(build_dir)
-
-gulp.task 'build:templateCache', ->
-  gulp.src globs.html
-    .pipe plumber()
-    .pipe templateCache()
-    .pipe gulp.dest(build_app_dir)
-    .pipe connect.reload()
 
 gulp.task 'build:sass', ->
   gulp.src globs.sass
@@ -214,7 +203,6 @@ gulp.task 'build', ()->
   runSequence(
     'clean:build'
     ['build:vendor', 'build:sass', 'build:assets', 'build:coffee', 'build:jade', 'build:index']
-    'build:templateCache'
     'build:inject'
     'run:karmaonce'
   )
@@ -225,7 +213,6 @@ gulp.task 'compile', ()->
     'clean:build'
     'clean:bin'
     ['build:vendor', 'build:sass', 'build:assets', 'build:coffee', 'build:jade', 'build:index']
-    'build:templateCache'
     ['compile:assets', 'compile:javascript', 'compile:css']
     'compile:index'
     'run:karmaonce'
@@ -236,7 +223,6 @@ gulp.task 'test', ()->
   runSequence(
     'clean:build'
     ['build:vendor', 'build:sass', 'build:assets', 'build:coffee', 'build:jade', 'build:index']
-    'build:templateCache'
     'build:inject'
     'run:karmaonce'
   )
@@ -246,7 +232,6 @@ gulp.task 'default', ->
   runSequence(
     'clean:build'
     ['build:vendor', 'build:sass', 'build:assets', 'build:coffee', 'build:jade', 'build:index']
-    'build:templateCache'
     'build:inject'
     'run:karmaonce'
     ['connect', 'watch']

@@ -2,6 +2,7 @@ do (app=angular.module "trouverDesTerrains.landing", [
   'ui.router'
   'templates'
   'security'
+  'templates'
 ]) ->
   app.config ['$stateProvider', ($stateProvider) ->
     $stateProvider.state 'landing',
@@ -9,7 +10,7 @@ do (app=angular.module "trouverDesTerrains.landing", [
       views:
         "main":
           controller: 'LandingController'
-          templateUrl: 'app/landing/landing.html'
+          templateUrl: '/app/landing/landing.html'
       data:
         pageTitle: 'Accueil'
   ]

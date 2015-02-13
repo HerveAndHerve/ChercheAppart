@@ -1,0 +1,17 @@
+section
+  div.md-subheader.md-default-theme
+    div.md-subheader-content
+      h2 project 
+
+  md-list.lands-list( layout="column" )
+    md-item( 
+      ng-repeat="ad in ads"
+    )
+      md-divider
+      md-item-content( style="background-color: white" )
+        div.md-tile-left.md-image-tile
+          img( ng-src="{{ ad.img }}" )
+        div.md-tile-content
+          h3 lol
+
+

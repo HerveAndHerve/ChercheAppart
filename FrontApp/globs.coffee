@@ -77,6 +77,7 @@ globs.app = globs.vendor_js
   .concat [
     globs.app_js
     globs.common_js
+    'build/app/templates.js'
     "!build/app/**/*.spec.js"
     globs.app_css
   ]

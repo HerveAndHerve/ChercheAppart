@@ -7,16 +7,22 @@ do (app=angular.module "trouverDesTerrains.listeProjets", [
       views:
         "main":
           controller: 'ListeProjetsController'
-          templateUrl: 'app/main/projets/liste/listeProjets.html'
+          templateUrl: '/app/main/projets/liste/listeProjets.html'
       data:
         pageTitle: 'mes projets'
+      resolve:
+        projects: [
+          'ProjectResource',
+          (ProjectResource)->
+            ProjectResource.getProjects()
+        ]
   ]
 
   app.controller 'ListeProjetsController', [
-    '$scope', 'Project', '$state',
-    ($scope, Project, $state) ->
-      $scope.Project = Project
+    '$scope', '$state', 'projects',
+    ($scope, $state, projects) ->
+      $scope.projects = projects.projects
       $scope.navToProject = (project)->
-        $state.go 'main.projects.detail.new', projectId: project.id
+        $state.go 'main.project.news', projectId: project.id
 
   ]

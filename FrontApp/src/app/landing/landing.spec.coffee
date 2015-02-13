@@ -12,6 +12,7 @@ describe 'landing module', ->
       $q = $injector.get '$q'
       Auth = $injector.get 'Auth'
 
+
       createController = ()->
         $controller 'LandingController', $scope: $scope
 

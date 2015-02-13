@@ -158,6 +158,13 @@ module MyApi
             end
             #}}}
 
+            #{{{ archived
+            desc "see my archived list"
+            get :archived do
+              arc = @project.ad_lists.find_or_create_by(name: "archived")
+              present :list, arc, with: MyApi::Entities::AdList, complete: true
+            end
+            #}}}
 
             namespace ':list_id' do 
               before do 

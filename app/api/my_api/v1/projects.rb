@@ -103,6 +103,20 @@ module MyApi
             end
             #}}}
 
+            #{{{ archived
+            desc "see my archived list"
+            params do 
+              optional :nstart, type: Integer, default: 0, desc: "first ad to show (default 0 for first ad)"
+              optional :nstop, type: Integer, default: 10, desc: "last ad to show (default 9 for tenth ad)"
+            end
+            get :archived do
+              arc = @project.ad_lists.find_or_create_by(name: "archived").ads
+              count = arc.size
+              present :total_count, count
+              present :ads, arc[params[:nstart]..params[:nstop]], with: MyApi::Entities::Ad
+            end
+            #}}}
+
             namespace ':ad_id' do
               before do
                 @ad = Ad.find(params[:ad_id]) || error!("ad not found",404)
@@ -158,25 +172,10 @@ module MyApi
             end
             #}}}
 
-            #{{{ archived
-            desc "see my archived list"
-            get :archived do
-              arc = @project.ad_lists.find_or_create_by(name: "archived")
-              present :list, arc, with: MyApi::Entities::AdList, complete: true
-            end
-            #}}}
-
             namespace ':list_id' do 
               before do 
                 @list = @project.public_ad_lists.find(params[:list_id]) || error!("not found",404)
               end
-
-              #{{{ get an ad_list details
-              desc "get a list details"
-              get do 
-                present :list, @list, with: MyApi::Entities::AdList, complete: true
-              end
-              #}}}
 
               #{{{ delete list
               desc "delete a list"
@@ -198,6 +197,17 @@ module MyApi
                 else
                   error!(@list.errors)
                 end
+              end
+              #}}}
+
+              #{{{ ads
+              desc "get the ads of this list"
+              params do 
+                optional :nstart, type: Integer, default: 0, desc: "first ad to show (default 0 for first ad)"
+                optional :nstop, type: Integer, default: -1, desc: "last ad to show (default -1 to show everything)"
+              end
+              get :ads do 
+                present :list, @list.ads[params[:nstart]..params[:nstop]], with: MyApi::Entities::Ad
               end
               #}}}
 

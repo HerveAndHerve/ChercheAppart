@@ -96,6 +96,13 @@ describe MyApi::V1::Projects do
       @p.save
       @a.save
       @user.save
+
+      #only way I found to really stub the method in api end-to-end test :/
+      class User
+        def has_valid_subscription?
+          false
+        end
+      end
     end
 
     subject(:enlist_with_new_name) { post "/api/projects/#{@p.id}/ads/#{@a.id}/enlist", {list_name_or_id: 'tagada'} ; @p.reload}
@@ -151,7 +158,7 @@ describe MyApi::V1::Projects do
     end
     context("when no free moves are available") do
       before do 
-        @user.update_attribute(:allowed_moves_limit, 0)
+        @user.update_attribute(:allowed_moves_count, 0)
       end
 
       it "won't archive" do

@@ -9,8 +9,7 @@ class User
   field :uid
   field :first_name, type: String, default: ""
   field :last_name, type: String, default: ""
-  field :moves_count, type: Integer, default: 0
-  field :allowed_moves_limit, type: Integer, default: (ENV["FREE_MOVES_LIMIT"] || 20).to_i
+  field :allowed_moves_count, type: Integer, default: (ENV["FREE_MOVES_LIMIT"] || 20).to_i
 
   has_and_belongs_to_many :projects, class_name: "Project", inverse_of: :owners
 
@@ -85,9 +84,9 @@ class User
   private
 
   def paying_move
-    raise "quota_excedeed" if self.moves_count >= self.allowed_moves_limit
+    raise "quota_excedeed" if self.allowed_moves_count <= 0 and !has_valid_payment_or_subscription?
     if a = yield
-      self.inc(moves_count: 1)
+      self.inc(allowed_moves_count: -1) unless !has_valid_payment_or_subscription?
       return a
     end
   end

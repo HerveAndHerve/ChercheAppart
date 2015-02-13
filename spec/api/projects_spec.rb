@@ -96,6 +96,7 @@ describe MyApi::V1::Projects do
       @p.save
       @a.save
       @user.save
+      allow_any_instance_of(User).to receive(:has_valid_subscription?).and_return(false)
     end
 
     subject(:enlist_with_new_name) { post "/api/projects/#{@p.id}/ads/#{@a.id}/enlist", {list_name_or_id: 'tagada'} ; @p.reload}
@@ -151,7 +152,7 @@ describe MyApi::V1::Projects do
     end
     context("when no free moves are available") do
       before do 
-        @user.update_attribute(:allowed_moves_limit, 0)
+        @user.update_attribute(:allowed_moves_count, 0)
       end
 
       it "won't archive" do

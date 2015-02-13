@@ -12,7 +12,7 @@ module AdScrapper
     end
 
     def content
-      @content ||= Nokogiri::HTML(open(url))
+      @content ||= Nokogiri::HTML(open(url), nil, "UTF-8")
     end
 
     # specific to each provider

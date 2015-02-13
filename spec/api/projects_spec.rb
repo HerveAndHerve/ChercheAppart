@@ -96,13 +96,7 @@ describe MyApi::V1::Projects do
       @p.save
       @a.save
       @user.save
-
-      #only way I found to really stub the method in api end-to-end test :/
-      class User
-        def has_valid_subscription?
-          false
-        end
-      end
+      allow_any_instance_of(User).to receive(:has_valid_subscription?).and_return(false)
     end
 
     subject(:enlist_with_new_name) { post "/api/projects/#{@p.id}/ads/#{@a.id}/enlist", {list_name_or_id: 'tagada'} ; @p.reload}

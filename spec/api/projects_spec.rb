@@ -30,7 +30,7 @@ describe MyApi::V1::Projects do
       sign_up_and_login!
     end
 
-    subject(:post_create) { post 'api/projects', {name: 'tagada'} }
+    subject(:post_create) { post 'api/projects', {name: 'tagada', search_criteria: {min_surface: 12345}} }
 
     it 'creates project' do 
       expect{post_create}.to change{Project.count}.by(1)
@@ -39,6 +39,11 @@ describe MyApi::V1::Projects do
     it 'assigns project to current user' do
       post_create
       assert(Project.last.owners.include?(@user))
+    end
+
+    it 'fills search criteria' do
+      post_create
+      expect(Project.last.search_criteria.min_surface).to eq 12345
     end
   end
   #}}}

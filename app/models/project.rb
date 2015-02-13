@@ -46,6 +46,14 @@ class Project
     ad_lists.where(hidden: false)
   end
 
+  def listed_ads_count
+    public_ad_lists.map(&:ads_count).reduce(:+)
+  end
+
+  def archived_ads_count
+    ad_lists.find_or_create_by(name: "archived").ads_count
+  end
+
   private
 
   def set_default_lists

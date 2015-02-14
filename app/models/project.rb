@@ -51,14 +51,14 @@ class Project
   end
 
   def archived_ads_count
-    ad_lists.find_or_create_by(name: "archived").ads_count
+    ad_lists.find_or_create_by(name: "archivé").ads_count
   end
 
   private
 
   def set_default_lists
-    %w(archived interesting to_contact waiting appointment_taken folder_given accepted refused).each do |k|
-      AdList.create(name: k, project: self, hidden: (k == 'archived')) unless ad_lists.where(name: k).exists?
+    %w(archivé intéressant à_contacter en_attente rendez_vous_pris dossier_déposé accepté refusé).each do |k|
+      AdList.create(name: k, project: self, hidden: (k == 'archivé')) unless ad_lists.where(name: k).exists?
     end
   end
 

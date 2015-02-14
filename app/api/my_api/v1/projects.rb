@@ -110,7 +110,7 @@ module MyApi
               optional :nstop, type: Integer, default: 10, desc: "last ad to show (default 9 for tenth ad)"
             end
             get :archived do
-              arc = @project.ad_lists.find_or_create_by(name: "archived").ads
+              arc = @project.ad_lists.find_or_create_by(name: "archivé").ads
               count = arc.size
               present :total_count, count
               present :ads, arc[params[:nstart]..params[:nstop]], with: MyApi::Entities::Ad
@@ -148,16 +148,17 @@ module MyApi
               #{{{ archive
               desc "archive this ad"
               post :archive do
-                try_if_authorized { current_user.enlist_ad!(@project, @ad,'archived') }
+                try_if_authorized { current_user.enlist_ad!(@project, @ad,'archivé') }
               end
               #}}}
 
               #{{{ unarchive
               desc "unarchive this ad"
               post :unarchive do
-                try_if_authorized { current_user.unlist_ad!(@project, @ad,'archived') }
+                try_if_authorized { current_user.unlist_ad!(@project, @ad,'archivé') }
               end
               #}}}
+
             end
 
           end

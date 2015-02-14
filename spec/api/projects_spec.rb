@@ -100,9 +100,9 @@ describe MyApi::V1::Projects do
     end
 
     subject(:enlist_with_new_name) { post "/api/projects/#{@p.id}/ads/#{@a.id}/enlist", {list_name_or_id: 'tagada'} ; @p.reload}
-    subject(:enlist_with_existing_name) { post "/api/projects/#{@p.id}/ads/#{@a.id}/enlist", {list_name_or_id: 'interesting'} ; @p.reload}
-    subject(:enlist_with_id)  { post "/api/projects/#{@p.id}/ads/#{@a.id}/enlist", {list_name_or_id: @p.ad_lists.find_by(name: 'interesting').id} ; @p.reload} 
-    subject(:unlist_with_id)  { post "/api/projects/#{@p.id}/ads/#{@a.id}/unlist", {list_name_or_id: @p.ad_lists.find_by(name: 'interesting').id} ; @p.reload} 
+    subject(:enlist_with_existing_name) { post "/api/projects/#{@p.id}/ads/#{@a.id}/enlist", {list_name_or_id: 'intéressant'} ; @p.reload}
+    subject(:enlist_with_id)  { post "/api/projects/#{@p.id}/ads/#{@a.id}/enlist", {list_name_or_id: @p.ad_lists.find_by(name: 'intéressant').id} ; @p.reload} 
+    subject(:unlist_with_id)  { post "/api/projects/#{@p.id}/ads/#{@a.id}/unlist", {list_name_or_id: @p.ad_lists.find_by(name: 'intéressant').id} ; @p.reload} 
     subject(:archive) {post "/api/projects/#{@p.id}/ads/#{@a.id}/archive" ; @p.reload}
     subject(:unarchive) {post "/api/projects/#{@p.id}/ads/#{@a.id}/unarchive" ; @p.reload}
 
@@ -128,7 +128,7 @@ describe MyApi::V1::Projects do
           expect{enlist_with_existing_name}.to change{@p.ad_lists.count}.by(0)
         end
         it 'adds the ad to the list' do 
-          expect{enlist_with_existing_name}.to change{@p.ad_lists.find_by(name: 'interesting').ad_ids.include?(@a.id)}.from(false).to(true)
+          expect{enlist_with_existing_name}.to change{@p.ad_lists.find_by(name: 'intéressant').ad_ids.include?(@a.id)}.from(false).to(true)
         end
       end
 
@@ -137,15 +137,15 @@ describe MyApi::V1::Projects do
           expect{enlist_with_id}.to change{@p.ad_lists.count}.by(0)
         end
         it 'adds the ad to the list' do 
-          expect{enlist_with_id}.to change{@p.ad_lists.find_by(name: 'interesting').ad_ids.include?(@a.id)}.from(false).to(true)
-          expect{unlist_with_id}.to change{@p.ad_lists.find_by(name: 'interesting').ad_ids.include?(@a.id)}.from(true).to(false)
+          expect{enlist_with_id}.to change{@p.ad_lists.find_by(name: 'intéressant').ad_ids.include?(@a.id)}.from(false).to(true)
+          expect{unlist_with_id}.to change{@p.ad_lists.find_by(name: 'intéressant').ad_ids.include?(@a.id)}.from(true).to(false)
         end
       end
 
       describe 'archive' do
         it 'archives' do
-          expect{archive}.to change{@p.ad_lists.find_by(name: 'archived').ad_ids.include?(@a.id)}.from(false).to(true)
-          expect{unarchive}.to change{@p.ad_lists.find_by(name: 'archived').ad_ids.include?(@a.id)}.from(true).to(false)
+          expect{archive}.to change{@p.ad_lists.find_by(name: 'archivé').ad_ids.include?(@a.id)}.from(false).to(true)
+          expect{unarchive}.to change{@p.ad_lists.find_by(name: 'archivé').ad_ids.include?(@a.id)}.from(true).to(false)
         end
       end
 

@@ -5,11 +5,10 @@ describe MyApi::V1::Ads do
       @a = FactoryGirl.create(:ad)
     end
 
-    subject(:get_ad) { get "api/ads/#{@a.id}" }
+    subject(:get_ad) { get "api/my_ads/#{@a.id}" }
 
     it "gets ad" do
       get_ad
-      puts response.body
       expect(parsed_response.has_key?("ad")).to be true
       expect(parsed_response["ad"]["id"]).to eq @a.id.to_s
     end

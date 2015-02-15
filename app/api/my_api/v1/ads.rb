@@ -3,7 +3,7 @@ module MyApi
     class Ads < Grape::API
       format :json
 
-      namespace :ads do 
+      namespace :my_ads do 
         before do 
           sign_in!
         end

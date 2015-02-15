@@ -92,7 +92,7 @@ module MyApi
             desc "get a project new ads"
             params do 
               optional :nstart, type: Integer, default: 0, desc: "first ad to show (default 0 for first ad)"
-              optional :nstop, type: Integer, default: 10, desc: "last ad to show (default 9 for tenth ad)"
+              optional :nstop, type: Integer, default: 9, desc: "last ad to show (default 9 for tenth ad)"
             end
             get :new do 
               count = @project.new_ads_count

@@ -21,6 +21,13 @@ do (app=angular.module "trouverDesTerrains.projets", [
     'Restangular',
     (Restangular)->
       new class ProjectResource
+
+        getProject: (projectId)->
+          console.log 'haha'
+          Restangular
+            .one 'projects', projectId
+            .customGET null
+
         getProjects: ()->
           Restangular
             .all 'projects'
@@ -54,6 +61,12 @@ do (app=angular.module "trouverDesTerrains.projets", [
             .all 'ads'
             .customGET 'archived'
 
+        archiveAd: (projectId, adId)->
+          Restangular
+            .one 'projects', projectId
+            .one 'ads', adId
+            .customPOST null, 'archive'
+
         addAdToList: (projectId, listId, adId)->
           params =
             list_name_or_id: listId
@@ -62,4 +75,8 @@ do (app=angular.module "trouverDesTerrains.projets", [
             .one 'ads', adId
             .customPOST params, 'enlist'
 
+        getAd: (adId)->
+          Restangular
+            .one 'ads', adId
+            .customGET null
   ]

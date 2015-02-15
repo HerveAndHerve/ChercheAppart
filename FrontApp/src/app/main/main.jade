@@ -1,72 +1,19 @@
-md-sidenav.md-whiteframe-z2(
-  md-component-id="sidenav-left"
+md-sidenav( 
+  md-is-locked-open="$media('gt-md')" 
+  md-component-id="sidenav-left" 
+  ui-view="sidenav" 
+  ng-show="$state.includes('main.project')"
 )
-  md-toolbar
-    h1.md-toolbar-tools 
-      span.fa.fa-bars( 
-        ng-click="toggleLeftNav()"
-        style="cursor: pointer"
-      )
-      span.pacifico( ui-sref="main.projects" )  &nbsp; &nbsp; Cherche ton appart 
-
-  md-content
-    md-subheader.md-primary navigation
-    md-list
-      md-item
-        md-item-content 
-          div.md-tile-content 
-            span( ui-sref="main.projects", ng-click="toggleLeftNav()" )  mes projets
-      md-item
-        md-item-content 
-          div.md-tile-content
-            span.fa.fa-plus 
-            span(ui-sref="main.newProject", ng-click="toggleLeftNav()")  nouveau projet
-      md-item
-        md-divider
-        md-item-content
-          div.md-tile-content 
-            span.fa.fa-power-off( ng-click="Auth.logout(); toggleLeftNav()" )  déconnexion
-
 div.full-height( layout="column", layout-fill )
   md-toolbar.md-primary( style="position: relative" )
     h1.md-toolbar-tools 
-      span.fa.fa-bars( ng-click="toggleLeftNav()", style="cursor: pointer" )
+      span.fa.fa-bars( 
+        ng-click="toggleLeftNav()"
+        style="cursor: pointer" hide-gt-md
+        ng-show="$state.includes('main.project')"
+      )
       a.pacifico( ui-sref="main.projects" )  &nbsp; &nbsp; Cherche ton appart 
       div( ui-view="title" ) 
-
-  md-toolbar( 
-    style="min-height: 55px"
-    ng-show="$state.includes('main.project')"
-  )
-    md-tabs( 
-      class=" md-white-theme"
-      md-stretch-tabs="always"
-      style="z-index: 3; position: relative; display: block"
-    )
-      md-tab.md-left-tab( 
-        md-active="$state.include('main.project.archived')"
-        md-on-select="$state.go('main.project.archived')"
-      )
-        md-tab-label 
-          span.fa.fa-archive
-          span( hide-sm )  archivés
-
-      md-tab( 
-        md-active="$state.current.name == 'main.project.news'" 
-        md-on-select="$state.go('main.project.news')"
-      )
-        md-tab-label 
-          span.fa.fa-home
-          span( hide-sm )  nouveaux 
-
-      md-tab.md-right-tab( 
-        md-active="$state.include('main.project.categories')"
-        md-on-select="$state.go('main.project.categories')"
-      )
-        md-tab-label
-          span.fa.fa-star
-          span( hide-sm )  en cours
-
 
   md-content(class="full-width full-height grey-bg landing-background")
     div( ui-view="main", class="wrapper" )

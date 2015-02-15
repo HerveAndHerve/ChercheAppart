@@ -103,3 +103,21 @@ md-tabs.md-white-theme md-tab {
 .pacifico {
   font-family: 'Pacifico', 'Roboto', sans-serif;
 }
+
+md-item.active {
+  color: white;
+  background-color: $indigo;
+}
+
+md-item.active md-item-content {
+  background-color: $indigo;
+  .md-tile-content {
+    color: white !important;
+  }
+}
+
+
+
+.border-right {
+  border-right: 1px solid rgba(0, 0, 0, 0.12);
+}

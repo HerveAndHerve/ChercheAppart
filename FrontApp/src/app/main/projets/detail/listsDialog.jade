@@ -1,0 +1,13 @@
+md-dialog
+  md-content
+    md-subheader.md-sticky-no-effect.md-primary Ajouter cette annonce à une liste
+    md-list
+      md-item( 
+        ng-repeat="list in lists" ng-click="addAdToList(list)"
+        ng-class="{'active': list.id == $stateParams.categoryId }"
+        ng-disabled="$stateParams.categoryId == list.id"
+      )
+        md-item-content 
+          div.md-tile-content 
+            span.fa.fa-sm.fa-chevron-right( ng-show="$stateParams.categoryId == list.id" )
+            |  {{ list.name }}

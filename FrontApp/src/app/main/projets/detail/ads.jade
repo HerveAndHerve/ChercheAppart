@@ -1,26 +1,44 @@
-section
-  div.md-subheader.md-default-theme
-    div.md-subheader-content
-      h2 Annonces 
+div( layout="row" )
+  section( style="position: relative" flex )
+    div.md-subheader.md-default-theme
+      div.md-subheader-content
+        h2 {{ project.name }} 
+        h4 {{ Lists.activeList().name }}
 
-  md-list.lands-list( layout="column" )
-    md-item( 
-      ng-repeat="ad in ads"
-    )
-      md-divider
-      md-item-content( style="background-color: white" )
-        div.md-tile-left.md-image-tile
-          img( ng-src="{{ ad.img }}" style="width: 120px; margin: 10px")
-        div.md-tile-content( layout="row" layout-align="space-between center" )
-          div
-            h3( ng-click="selectAd(ad)" ) {{ ad.location }} - {{ ad.district }}
-            p {{ ad.description }}
-            p {{ ad.price }} &euro;
-            p {{ ad.surface | number }} m
-              sup 2
-          div( flex )
-          div
-            md-button.md-primary.md-raised( ng-click="interestingAd(ad)" )
-              span.fa.fa-star.fa-2x
+    div
+      section
+        md-content
+          md-list( layout="column" )
+            md-item(
+              ng-hide="ads.length"
+            )
+              md-divider
+              md-item-content
+                div.md-tile-content
+                  Il n'y a pas d'annonces dans cette liste
+            md-item( 
+              ng-repeat="ad in ads"
+              ng-hide="ad.hide"
+              md-swipe-left="archiveAd();"
+              md-swipe-right="openMoveAdModal(ad, $event)"
+            )
+              md-divider
+              md-item-content( style="background-color: white" )
+                div.md-tile-left.md-image-tile
+                  img( ng-src="{{ ad.img }}" style="width: 120px; margin: 10px" )
+                div.md-tile-content
+                  div
+                    h3( ng-click="selectAd(ad)" ) {{ ad.location }} - {{ ad.district }}
+                    p {{ ad.description }}
+                    p {{ ad.price }} &euro;
+                    p {{ ad.surface | number }} m
+                      sup 2
+                  div( style="margin 10px", layout="row" layout-align="end" )
+                    div
+                      md-button.md-accent( 
+                        ng-click="archiveAd(ad)"
+                      )
+                        span non 
 
-
+                      md-button.md-primary( ng-click="openMoveAdModal(ad, $event)" )
+                        span  oui 

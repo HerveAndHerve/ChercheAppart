@@ -1,0 +1,43 @@
+md-toolbar
+  h1.md-toolbar-tools 
+    span.fa.fa-bars( 
+      ng-click="toggleLeftNav()"
+      style="cursor: pointer"
+      hide-gt-md
+    )
+    span.pacifico( ui-sref="main.projects" )  &nbsp; &nbsp; {{ project.name }} 
+
+md-content
+  md-list.lands-list(
+   style="margin-top: 0px; padding-top: 0px; border-right: 1px solid rgba(0, 0, 0, 0.12)"
+  )
+    md-item( 
+      ui-sref="main.project.news"
+      ng-class="{'active': $state.current.name == 'main.project.news'}"
+    )
+      md-item-content()
+        div.md-tile-left
+          div.news-count( 
+            layout="row"
+            layout-align="center center" 
+          )
+            span {{ project.new_ads_count }}
+        div.md-tile-content
+          h3 Nouvelles annonces
+    md-item( 
+      ng-repeat="category in Lists.lists"
+      ui-sref="main.project.category({categoryId: category.id})"
+      ng-class="{'active': $stateParams.categoryId == category.id }"
+    )
+      md-item-content
+        div.md-tile-left
+          div.news-count( 
+            layout="row"
+            layout-align="center center" 
+          )
+            span {{ category.ads_count }}
+        div.md-tile-content( hide-sm )
+          h3 {{ category.name }}
+
+
+

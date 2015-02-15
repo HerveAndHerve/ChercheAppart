@@ -11,7 +11,7 @@ describe 'projetDetail section', ->
       $controller = $injector.get '$controller'
       ads = []
       createController = ()->
-        $controller 'AdsController', $scope: $scope, ads: ads
+        $controller 'AdsController', $scope: $scope, ads: ads, categories: [], project: { projects: []}
 
     it 'should have $state in the $scope', ()->
       controller = createController()

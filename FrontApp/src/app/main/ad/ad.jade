@@ -1,10 +1,17 @@
 div.full-height( layout="column", layout-fill )
+  md-button.md-fab.md-accent(
+    style="position: fixed; bottom: 3em; right: 3em"
+    ng-click="archiveAd()"
+  )
+    span.fa.fa-archive( style="color: white" )
+
+  md-button.md-fab.md-primary(
+    style="position: fixed; bottom: 8em; right: 3em"
+    ng-click="openMoveAdModal( $event )"
+  )
+    span.fa.fa-list
   md-toolbar.md-primary( style="position: relative" )
-    h1.md-toolbar-tools( layout="row", layout-align="space-between" )
+    h1.md-toolbar-tools
       a.fa.fa-chevron-left( ui-sref="^" )
       a.pacifico( ui-sref="main.projects" )  &nbsp; &nbsp; Cherche ton appart 
-      span( flex )
-      span
-        span.fa.fa-archive
-        span.fa.fa-star
-  iframe( flex ng-src="{{ url }}" style="width: 100%;" )
+  iframe( flex ng-src="{{ ad.url }}" style="width: 100%; border: 0px" )

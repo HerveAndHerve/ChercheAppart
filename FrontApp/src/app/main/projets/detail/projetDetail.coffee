@@ -71,24 +71,23 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
   ]
 
   app.controller 'ListsSidenavController', [
-    '$state', '$scope', 'Lists', 'Project', '$stateParams', 'Analytics', '$mdSidenav', '$timeout',
-    ($state, $scope, Lists, Project, $stateParams, Analytics, $mdSidenav, $timeout)->
+    '$state', '$scope', 'Lists', 'Project', '$stateParams', 'Analytics', '$mdSidenav',
+    ($state, $scope, Lists, Project, $stateParams, Analytics, $mdSidenav)->
       $scope.Project = Project
       $scope.$stateParams = $stateParams
       $scope.$state = $state
       $scope.Lists = Lists
 
       $scope.selectNews = ()->
-        $mdSidenav('sidenav-left').toggle()
-        $timeout ()->
+        $mdSidenav('sidenav-left').toggle().then( ()->
           $state.go 'main.project.news'
+        )
         Analytics.navLists()
 
       $scope.selectList = (list)->
-        $mdSidenav('sidenav-left').toggle()
-        console.log $scope.toggleLeftNav
-        $timeout ()->
+        $mdSidenav('sidenav-left').toggle().then( ()->
           $state.go 'main.project.list', listId: list.id
+        )
         Analytics.navLists()
 
   ]
@@ -135,8 +134,8 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
   ]
 
   app.factory 'Lists', [
-    'ProjectResource', '$stateParams', '$state', '$mdDialog', 'Project',
-    (ProjectResource, $stateParams, $state, $mdDialog, Project)->
+    'ProjectResource', '$stateParams', '$state', '$mdDialog', 'Project', '$mdSidenav'
+    (ProjectResource, $stateParams, $state, $mdDialog, Project, $mdSidenav)->
       findListById = (lists, id)->
         out = null
         angular.forEach( lists, (list)->

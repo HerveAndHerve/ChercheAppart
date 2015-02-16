@@ -71,8 +71,8 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
   ]
 
   app.controller 'ListsSidenavController', [
-    '$state', '$scope', 'Lists', 'Project', '$stateParams',
-    ($state, $scope, Lists, Project, $stateParams)->
+    '$state', '$scope', 'Lists', 'Project', '$stateParams', 'Analytics',
+    ($state, $scope, Lists, Project, $stateParams, Analytics)->
       $scope.Project = Project
       $scope.$stateParams = $stateParams
       $scope.$state = $state
@@ -80,18 +80,20 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
 
       $scope.selectNews = ()->
         $scope.toggleLeftNav()
+        Analytics.navLists()
         $state.go 'main.project.news'
 
       $scope.selectList = (list)->
         $scope.toggleLeftNav()
+        Analytics.navLists()
         $state.go 'main.project.list', listId: list.id
 
   ]
 
 
   app.controller 'AdsController', [
-    '$scope', 'ads', '$state', '$stateParams', 'ProjectResource', 'ListPicker', 'Lists', 'Project', 'Ads',
-    ($scope, ads, $state, $stateParams, ProjectResource, ListPicker, Lists, Project, Ads) ->
+    '$scope', 'ads', '$state', '$stateParams', 'ProjectResource', 'ListPicker', 'Lists', 'Project', 'Ads', 'Analytics',
+    ($scope, ads, $state, $stateParams, ProjectResource, ListPicker, Lists, Project, Ads, Analytics) ->
 
       $scope.Ads = Ads
       $scope.Lists = Lists
@@ -101,6 +103,7 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
       $scope.$stateParams = $stateParams
 
       $scope.selectAd = (ad)->
+        Analytics.selectAd()
         $state.go '.ad', projectId: $stateParams.projectId, adId: ad.id
 
       $scope.archiveAd = (ad)->
@@ -184,18 +187,3 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
         ad.hide = true
         Lists.addToList( $stateParams.listId, list.id, ad.id )
   ]
-
-  app.directive 'resizable', [
-    '$window',
-    ($window)->
-      ($scope)->
-        $scope.initializeWindowSize = ->
-          $scope.windowHeight = $window.innerHeight
-          $scope.windowWidth  = $window.innerWidth
-        $scope.initializeWindowSize()
-
-        angular.element($window).bind 'resize', ->
-          $scope.initializeWindowSize()
-          $scope.$apply()
-  ]
-

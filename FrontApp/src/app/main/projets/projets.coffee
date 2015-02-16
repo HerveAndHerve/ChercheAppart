@@ -1,4 +1,5 @@
 do (app=angular.module "trouverDesTerrains.projets", [
+  'analytics'
   'ui.router'
   'restangular'
   'trouverDesTerrains.new'
@@ -46,7 +47,6 @@ do (app=angular.module "trouverDesTerrains.projets", [
           @batchIndex = 0
 
         initializeList: (listId, projectId)->
-          console.log 'init list'
           @ads = []
           @listId = listId
           @projectId = projectId
@@ -57,18 +57,16 @@ do (app=angular.module "trouverDesTerrains.projets", [
         loadNextBatch: ()->
           that = @
           if that.listId and that.projectId and not that.loading
-            console.log 'next batch'
             that.loading = true
             start = that.batchIndex * batchSize
             end = ((that.batchIndex + 1) * batchSize) - 1
-            console.log start
-            console.log end
 
             onSuccess = (success)->
               that.batchIndex += 1
               that.loading = false
-              if success.ads.length
-                that.ads = that.ads.concat success.ads
+              if success.ads
+                if success.ads.length
+                  that.ads = that.ads.concat success.ads
 
             if that.listId == 'new'
               ProjectResource.getNewAds( that.projectId, start, end).then onSuccess
@@ -79,8 +77,8 @@ do (app=angular.module "trouverDesTerrains.projets", [
   ]
 
   app.factory 'ProjectResource', [
-    'Restangular',
-    (Restangular)->
+    'Restangular', 'Analytics',
+    (Restangular, Analytics)->
       new class ProjectResource
 
         getProject: (projectId)->
@@ -94,14 +92,22 @@ do (app=angular.module "trouverDesTerrains.projets", [
             .customGET null
 
         postProject: (project)->
+          analyticsCb = (success)->
+            Analytics.projectCreated()
+            success
           Restangular
             .all 'projects'
             .customPOST project
+            .then analyticsCb
 
         putProject: (project)->
+          analyticsCb = (success)->
+            Analytics.projectUpdated()
+            success
           Restangular
             .one 'projects', project.id
             .customPUT project
+            .then analyticsCb
 
         getProjectLists: (projectId)->
           Restangular
@@ -137,6 +143,9 @@ do (app=angular.module "trouverDesTerrains.projets", [
             .customGET 'archived', params
 
         archiveAd: (projectId, adId)->
+          analyticsCb = (success)->
+            Analytics.archiveAd()
+            success
           Restangular
             .one 'projects', projectId
             .one 'ads', adId
@@ -145,10 +154,14 @@ do (app=angular.module "trouverDesTerrains.projets", [
         addAdToList: (projectId, listId, adId)->
           params =
             list_name_or_id: listId
+          analyticsCb = (success)->
+            Analytics.addAdToList()
+            success
           Restangular
             .one 'projects', projectId
             .one 'ads', adId
             .customPOST params, 'enlist'
+            .then analyticsCb
 
         getAd: (adId)->
           Restangular

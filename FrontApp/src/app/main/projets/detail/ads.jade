@@ -2,8 +2,7 @@ div( layout="row" )
   section( style="position: relative" flex )
     div.md-subheader.md-default-theme
       div.md-subheader-content
-        h2 {{ project.name }} 
-        h4 {{ Lists.activeList().name }}
+        h2 {{ Project.project.name }} 
 
     div
       section
@@ -38,7 +37,7 @@ div( layout="row" )
                       md-button.md-accent( 
                         ng-click="archiveAd(ad)"
                       )
-                        span non 
+                        span.fa.fa-archive.fa-lg
 
                       md-button.md-primary( ng-click="openMoveAdModal(ad, $event)" )
-                        span  oui 
+                        span.fa.fa-list.fa-lg

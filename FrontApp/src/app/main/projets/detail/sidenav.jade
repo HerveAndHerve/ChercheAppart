@@ -5,14 +5,14 @@ md-toolbar
       style="cursor: pointer"
       hide-gt-md
     )
-    span.pacifico( ui-sref="main.projects" )  &nbsp; &nbsp; {{ project.name }} 
+    span.pacifico( ui-sref="main.projects" )  &nbsp; &nbsp; Listes 
 
 md-content
   md-list.lands-list(
    style="margin-top: 0px; padding-top: 0px; border-right: 1px solid rgba(0, 0, 0, 0.12)"
   )
     md-item( 
-      ui-sref="main.project.news"
+      ng-click="selectNews()"
       ng-class="{'active': $state.current.name == 'main.project.news'}"
     )
       md-item-content()
@@ -21,13 +21,13 @@ md-content
             layout="row"
             layout-align="center center" 
           )
-            span {{ project.new_ads_count }}
+            span {{ Project.project.new_ads_count }}
         div.md-tile-content
           h3 Nouvelles annonces
     md-item( 
-      ng-repeat="category in Lists.lists"
-      ui-sref="main.project.category({categoryId: category.id})"
-      ng-class="{'active': $stateParams.categoryId == category.id }"
+      ng-click="selectList(list)"
+      ng-repeat="list in Lists.lists"
+      ng-class="{'active': $stateParams.listId == list.id }"
     )
       md-item-content
         div.md-tile-left
@@ -35,9 +35,9 @@ md-content
             layout="row"
             layout-align="center center" 
           )
-            span {{ category.ads_count }}
-        div.md-tile-content( hide-sm )
-          h3 {{ category.name }}
+            span {{ list.ads_count }}
+        div.md-tile-content
+          h3 {{ list.name }}
 
 
 

@@ -71,22 +71,25 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
   ]
 
   app.controller 'ListsSidenavController', [
-    '$state', '$scope', 'Lists', 'Project', '$stateParams', 'Analytics',
-    ($state, $scope, Lists, Project, $stateParams, Analytics)->
+    '$state', '$scope', 'Lists', 'Project', '$stateParams', 'Analytics', '$mdSidenav', '$timeout',
+    ($state, $scope, Lists, Project, $stateParams, Analytics, $mdSidenav, $timeout)->
       $scope.Project = Project
       $scope.$stateParams = $stateParams
       $scope.$state = $state
       $scope.Lists = Lists
 
       $scope.selectNews = ()->
-        $scope.toggleLeftNav()
+        $mdSidenav('sidenav-left').toggle()
+        $timeout ()->
+          $state.go 'main.project.news'
         Analytics.navLists()
-        $state.go 'main.project.news'
 
       $scope.selectList = (list)->
-        $scope.toggleLeftNav()
+        $mdSidenav('sidenav-left').toggle()
+        console.log $scope.toggleLeftNav
+        $timeout ()->
+          $state.go 'main.project.list', listId: list.id
         Analytics.navLists()
-        $state.go 'main.project.list', listId: list.id
 
   ]
 

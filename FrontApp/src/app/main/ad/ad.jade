@@ -1,4 +1,4 @@
-div.full-height( layout="column", layout-fill style="height: 100%" )
+div( layout="column", layout-fill, style="height: 100%")
   md-button.md-fab.md-accent(
     style="position: fixed; bottom: 3em; right: 3em"
     ng-click="archiveAd()"
@@ -13,4 +13,4 @@ div.full-height( layout="column", layout-fill style="height: 100%" )
   md-toolbar.md-primary( style="position: relative" )
     h1.md-toolbar-tools
       a.fa.fa-chevron-left( ui-sref="^" )
-  iframe( flex ng-src="{{ trust( ad.url ) }}" style="width: 100%; border: 0px;" iframe-resize )
+  iframe( flex ng-src="{{ trust( ad.url ) }}" style="width: 100%; height: 100%; border: 0px;")

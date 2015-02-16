@@ -44,7 +44,13 @@ div.big-padding
 
 
     div( layout, layout-align="end", style="margin-top: 30px" )
+      md-button( 
+        ui-sref="main.project.news"
+        ng-show="$state.current.name == 'main.project.edit'"
+      )
+        | annuler 
+      &nbsp;
       md-button.md-raised.md-warn( 
         ng-click="createProject()"
       )
-        | Créer le projet
+        | {{ action }} 

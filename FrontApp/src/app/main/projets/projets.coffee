@@ -16,16 +16,20 @@ do (app=angular.module "trouverDesTerrains.projets", [
         loadProject: (projectId)->
           that = @
           onSuccess = (success)->
-            that.project = success.projects[0]
-          ProjectResource.getProjects().then onSuccess
+            that.project = success.project
+          ProjectResource.getProject( projectId ).then onSuccess
 
         createProject: (project)->
           onSuccess = (success)->
-            console.log success
             $state.go 'main.project.news', projectId: success.project.id
           onError = (error)->
             console.log error
           ProjectResource.postProject(project).then onSuccess
+
+        updateProject: (project)->
+          onSuccess = ()->
+            $state.go 'main.project.news', null, reload: true
+          ProjectResource.putProject(project).then onSuccess
         
   ]
 
@@ -35,7 +39,6 @@ do (app=angular.module "trouverDesTerrains.projets", [
       new class ProjectResource
 
         getProject: (projectId)->
-          console.log 'haha'
           Restangular
             .one 'projects', projectId
             .customGET null
@@ -49,6 +52,11 @@ do (app=angular.module "trouverDesTerrains.projets", [
           Restangular
             .all 'projects'
             .customPOST project
+
+        putProject: (project)->
+          Restangular
+            .one 'projects', project.id
+            .customPUT project
 
         getProjectLists: (projectId)->
           Restangular

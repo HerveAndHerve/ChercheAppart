@@ -11,6 +11,7 @@ do (app=angular.module "trouverDesTerrains.ad", [
             templateUrl: '/app/main/ad/ad.html'
         data:
           pageTitle: 'ad/ad.tpl.html'
+          wrapper: false
         resolve:
           ad: [
             'ProjectResource', '$stateParams',
@@ -26,6 +27,7 @@ do (app=angular.module "trouverDesTerrains.ad", [
             templateUrl: '/app/main/ad/ad.html'
         data:
           pageTitle: 'ad/ad.tpl.html'
+          wrapper: false
         resolve:
           ad: [
             'ProjectResource', '$stateParams',
@@ -41,6 +43,7 @@ do (app=angular.module "trouverDesTerrains.ad", [
             templateUrl: '/app/main/ad/ad.html'
         data:
           pageTitle: 'ad/ad.tpl.html'
+          wrapper: false
         resolve:
           ad: [
             'ProjectResource', '$stateParams',
@@ -66,15 +69,4 @@ do (app=angular.module "trouverDesTerrains.ad", [
         ListPicker.openMoveAdModal(id: $stateParams.adId, event).then onSuccess
 
       $scope.$stateParams = $stateParams
-  ]
-
-  app.directive 'iframeResize', [
-    ()->
-      ($scope, elem, attr)->
-        elem.on 'load', ()->
-          height = elem[0].contentWindow.document.body.scrollHeight + 'px'
-          widht = '100%'
-          elem.css 'width', width
-          elem.css 'height', height
-
   ]

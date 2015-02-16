@@ -10,37 +10,47 @@ do (app=angular.module "trouverDesTerrains.new", [
           templateUrl: 'app/main/projets/new/new.html'
       data:
         pageTitle: 'Nouveau projet'
-        action: 'create'
+        action: 'Créer le projet'
       resolve:
         project: ['$q', ($q)->
           Project = ()->
-            @name = ''
-            @search_criteria = {}
+            @project =
+              name: ''
+              search_criteria: {}
           $q.when(new Project)
         ]
   ]
 
   app.config ['$stateProvider', ($stateProvider) ->
-    $stateProvider.state 'main.editProject',
-      url: '/projects/:projectId/edit'
+    $stateProvider.state 'main.project.edit',
+      url: '/edit'
       views:
         "main@main":
-          controller: 'NewController'
+          controller: 'EditController'
           templateUrl: 'app/main/projets/new/new.html'
+        "sidenav@main":
+          templateUrl: '/app/main/projets/detail/sidenav.html'
+          controller: 'ListsSidenavController'
       data:
         pageTitle: 'Nouveau projet'
-        action: 'create'
-      resolve:
-        project: ['Project', '$stateParams', (Project, $stateParams)->
-          Project.loadProject($stateParams.projectId)
-        ]
+        action: 'Éditer le projet'
   ]
 
   app.controller 'NewController', [
     '$scope', 'Project', '$state', 'project',
     ($scope, Project, $state, project) ->
       $scope.action = $state.current.data.action
-      $scope.project = project
-      $scope.createProject = ->
+      console.log project
+      $scope.project = project.project
+      $scope.createProject = ()->
         Project.createProject $scope.project
+  ]
+
+  app.controller 'EditController', [
+    '$scope', 'Project', '$state', 'project',
+    ($scope, Project, $state, project) ->
+      $scope.action = $state.current.data.action
+      $scope.project = Project.project
+      $scope.createProject = ()->
+        Project.updateProject $scope.project
   ]

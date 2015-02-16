@@ -12,8 +12,13 @@ div.full-height( layout="column", layout-fill )
         style="cursor: pointer" hide-gt-md
         ng-show="$state.includes('main.project')"
       )
-      a.pacifico( ui-sref="main.projects" )  &nbsp; &nbsp; Cherche ton appart 
+      a.pacifico( ui-sref="main.projects" hide-gt-md)  &nbsp; &nbsp; Cherche ton appart 
       div( ui-view="title" ) 
+      div( flex )
+      span.fa.fa-search( 
+        ng-show="$state.includes('main.project')" 
+        ui-sref="main.project.edit"
+      )
 
   md-content(class="full-width full-height grey-bg landing-background")
-    div( ui-view="main", class="wrapper full-height" )
+    div( ui-view="main", class="full-height" ng-class="{'wrapper': $state.current.data.wrapper == undefined}")

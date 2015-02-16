@@ -26,7 +26,10 @@ do (app=angular.module "trouverDesTerrains.landing", [
           $state.go 'main.projects'
       Auth.getCurrentUser().then onSuccess
 
-      $scope.authenticate = ()->
+      $scope.googleAuthenticate = ()->
         $window.location.href = '/users/auth/google_oauth2'
+
+      $scope.facebookAuthenticate = ()->
+        $window.location.href = '/users/auth/facebook'
   ]
 

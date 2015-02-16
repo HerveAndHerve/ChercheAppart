@@ -71,27 +71,31 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
   ]
 
   app.controller 'ListsSidenavController', [
-    '$state', '$scope', 'Lists', 'Project', '$stateParams',
-    ($state, $scope, Lists, Project, $stateParams)->
+    '$state', '$scope', 'Lists', 'Project', '$stateParams', 'Analytics', '$mdSidenav',
+    ($state, $scope, Lists, Project, $stateParams, Analytics, $mdSidenav)->
       $scope.Project = Project
       $scope.$stateParams = $stateParams
       $scope.$state = $state
       $scope.Lists = Lists
 
       $scope.selectNews = ()->
-        $scope.toggleLeftNav()
-        $state.go 'main.project.news'
+        $mdSidenav('sidenav-left').toggle().then( ()->
+          $state.go 'main.project.news'
+        )
+        Analytics.navLists()
 
       $scope.selectList = (list)->
-        $scope.toggleLeftNav()
-        $state.go 'main.project.list', listId: list.id
+        $mdSidenav('sidenav-left').toggle().then( ()->
+          $state.go 'main.project.list', listId: list.id
+        )
+        Analytics.navLists()
 
   ]
 
 
   app.controller 'AdsController', [
-    '$scope', 'ads', '$state', '$stateParams', 'ProjectResource', 'ListPicker', 'Lists', 'Project', 'Ads',
-    ($scope, ads, $state, $stateParams, ProjectResource, ListPicker, Lists, Project, Ads) ->
+    '$scope', 'ads', '$state', '$stateParams', 'ProjectResource', 'ListPicker', 'Lists', 'Project', 'Ads', 'Analytics',
+    ($scope, ads, $state, $stateParams, ProjectResource, ListPicker, Lists, Project, Ads, Analytics) ->
 
       $scope.Ads = Ads
       $scope.Lists = Lists
@@ -101,6 +105,7 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
       $scope.$stateParams = $stateParams
 
       $scope.selectAd = (ad)->
+        Analytics.selectAd()
         $state.go '.ad', projectId: $stateParams.projectId, adId: ad.id
 
       $scope.archiveAd = (ad)->
@@ -129,8 +134,8 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
   ]
 
   app.factory 'Lists', [
-    'ProjectResource', '$stateParams', '$state', '$mdDialog', 'Project',
-    (ProjectResource, $stateParams, $state, $mdDialog, Project)->
+    'ProjectResource', '$stateParams', '$state', '$mdDialog', 'Project', '$mdSidenav'
+    (ProjectResource, $stateParams, $state, $mdDialog, Project, $mdSidenav)->
       findListById = (lists, id)->
         out = null
         angular.forEach( lists, (list)->
@@ -184,18 +189,3 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
         ad.hide = true
         Lists.addToList( $stateParams.listId, list.id, ad.id )
   ]
-
-  app.directive 'resizable', [
-    '$window',
-    ($window)->
-      ($scope)->
-        $scope.initializeWindowSize = ->
-          $scope.windowHeight = $window.innerHeight
-          $scope.windowWidth  = $window.innerWidth
-        $scope.initializeWindowSize()
-
-        angular.element($window).bind 'resize', ->
-          $scope.initializeWindowSize()
-          $scope.$apply()
-  ]
-

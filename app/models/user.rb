@@ -53,12 +53,6 @@ class User
     [first_name || '', last_name || ''].map(&:capitalize).join(" ")
   end
 
-  class << self
-    def serialize_from_session(key,salt)
-      record = to_adapter.get(key[0]["$oid"]) || to_adapter.get(key)
-      record if record && record.authenticatable_salt == salt
-    end
-  end
 
   def enlist_ad!(project, ad,list_name_or_id)
     raise "user doesn't own this project" unless project.owners.include? self
@@ -80,6 +74,15 @@ class User
       list.save
     end
   end
+
+  #{{{ mongo/devise monkey patch
+  class << self
+    def serialize_from_session(key,salt)
+      record = to_adapter.get(key[0]["$oid"]) || to_adapter.get(key)
+      record if record && record.authenticatable_salt == salt
+    end
+  end
+  #}}}
 
   private
 

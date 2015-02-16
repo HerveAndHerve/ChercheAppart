@@ -58,7 +58,7 @@ class Project
   private
 
   def set_default_lists
-    %w(archivé intéressant à_contacter en_attente rendez_vous_pris dossier_déposé accepté refusé).each do |k|
+    ['archivé','intéressant','à contacter','en attente','rendez vous pris','dossier déposé','accepté','refusé'].each do |k|
       AdList.create(name: k, project: self, hidden: (k == 'archivé')) unless ad_lists.where(name: k).exists?
     end
   end

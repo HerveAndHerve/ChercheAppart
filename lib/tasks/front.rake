@@ -20,6 +20,7 @@ namespace :front do
       sh "bower install"
       sh "gulp compile"
       sh "rsync -Pa bin/ ../public/"
+      sh "chmod go+rx public/ -R"
     end
   end
 

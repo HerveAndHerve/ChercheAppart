@@ -6,6 +6,7 @@ do (app=angular.module "trouverDesTerrains", [
   'infinite-scroll'
   'ngMaterial'
   'templates'
+  'analytics'
   'siyfion.sfTypeahead'
   'security'
   'trouverDesTerrains.main'

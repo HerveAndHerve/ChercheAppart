@@ -1,10 +1,11 @@
 do (app=angular.module "security", [
   'ui.router'
   'restangular'
+  'analytics'
 ]) ->
   app.factory('Auth', [
-    'Restangular', '$state', '$window',
-    (Restangular, $state, $window) ->
+    'Restangular', '$state', '$window', 'Analytics',
+    (Restangular, $state, $window, Analytics) ->
       new class Auth
         constructor: ->
           @currentUser = null
@@ -12,6 +13,7 @@ do (app=angular.module "security", [
         getCurrentUser: ()->
           obj = @
           onSuccess = (success) ->
+            Analytics.registerUser( success.user )
             obj.currentUser = success.user
           onError = (error) ->
             console.log error

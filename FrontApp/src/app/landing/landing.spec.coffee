@@ -6,12 +6,14 @@ describe 'landing module', ->
   describe 'Landing controller', ->
     beforeEach inject ( $injector ) ->
       $state = $injector.get '$state'
+      $httpBackend = $injector.get '$httpBackend'
       $rootScope = $injector.get '$rootScope'
       $scope = $rootScope.$new()
       $controller = $injector.get '$controller'
       $q = $injector.get '$q'
       Auth = $injector.get 'Auth'
 
+      $httpBackend.whenGET('/analytics/mixpanel').respond({})
 
       createController = ()->
         $controller 'LandingController', $scope: $scope

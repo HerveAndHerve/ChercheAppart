@@ -29,4 +29,4 @@ div.full-height( layout="column", layout-fill )
     class="full-width grey-bg landing-background"
     style="height: 100%" 
   )
-    div( ui-view="main", ng-class="{'wrapper': $state.current.data.wrapper == undefined}")
+    div( ui-view="main", ng-class="{'wrapper': $state.current.data.wrapper == undefined, 'full-height': $state.current.data.wrapper !== undefined}")

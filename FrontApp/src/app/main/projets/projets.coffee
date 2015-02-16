@@ -30,7 +30,50 @@ do (app=angular.module "trouverDesTerrains.projets", [
           onSuccess = ()->
             $state.go 'main.project.news', null, reload: true
           ProjectResource.putProject(project).then onSuccess
-        
+  ]
+
+  app.factory 'Ads', [
+    'ProjectResource',
+    (ProjectResource)->
+
+      batchSize = 10
+      new class Ads
+
+        constructor: ()->
+          @ads = []
+          @listId = null
+          @projectId = null
+          @batchIndex = 0
+
+        initializeList: (listId, projectId)->
+          @ads = []
+          @listId = listId
+          @projectId = projectId
+          @batchIndex = 0
+          @loadNextBatch()
+          @loading = false
+
+        loadNextBatch: ()->
+          that = @
+          if that.listId and that.projectId and not that.loading
+            that.loading = true
+            start = that.batchIndex * batchSize
+            end = ((that.batchIndex + 1) * batchSize) - 1
+            console.log start
+            console.log end
+
+            onSuccess = (success)->
+              that.batchIndex += 1
+              that.loading = false
+              if success.ads.length
+                that.ads = that.ads.concat success.ads
+
+            if that.listId == 'new'
+              ProjectResource.getNewAds( that.projectId, start, end).then onSuccess
+            else if that.listId == 'archived'
+              ProjectResource.getArchivedAds( that.projectId, start, end ).then onSuccess
+            else
+              ProjectResource.getListAds( that.projectId, that.listId, start, end ).then onSuccess
   ]
 
   app.factory 'ProjectResource', [
@@ -63,23 +106,33 @@ do (app=angular.module "trouverDesTerrains.projets", [
             .one 'projects', projectId
             .customGET 'lists'
 
-        getListAds: (projectId, listId)->
+        getListAds: (projectId, listId, start, end)->
+          params =
+            nstart: start
+            nstop: end
+
           Restangular
             .one 'projects', projectId
             .one 'lists', listId
-            .customGET 'ads'
+            .customGET 'ads', params
 
-        getNewAds: (projectId)->
+        getNewAds: (projectId, start, end)->
+          params =
+            nstart: start
+            nstop: end
           Restangular
             .one 'projects', projectId
             .all 'ads'
-            .customGET 'new'
+            .customGET 'new', params
 
-        getArchivedAds: (projectId)->
+        getArchivedAds: (projectId, start, end)->
+          params =
+            nstart: start
+            nstop: end
           Restangular
             .one 'projects', projectId
             .all 'ads'
-            .customGET 'archived'
+            .customGET 'archived', params
 
         archiveAd: (projectId, adId)->
           Restangular

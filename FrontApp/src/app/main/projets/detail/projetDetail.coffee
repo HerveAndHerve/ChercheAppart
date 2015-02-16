@@ -32,9 +32,9 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
 
         resolve:
           ads: [
-            'ProjectResource', '$stateParams',
-            (ProjectResource, $stateParams)->
-              ProjectResource.getNewAds( $stateParams.projectId)
+            'Ads', '$stateParams',
+            (Ads, $stateParams)->
+              Ads.initializeList( 'new', $stateParams.projectId )
           ]
 
       .state 'main.project.archived',
@@ -48,9 +48,9 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
             controller: 'ListsSidenavController'
         resolve:
           ads: [
-            'ProjectResource', '$stateParams',
-            (ProjectResource, $stateParams)->
-              ProjectResource.getArchivedAds( $stateParams.projectId)
+            'Ads', '$stateParams',
+            (Ads, $stateParams)->
+              Ads.initializeList( 'archived', $stateParams.projectId )
           ]
 
       .state 'main.project.list',
@@ -64,9 +64,9 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
             controller: 'ListsSidenavController'
         resolve:
           ads: [
-            'ProjectResource', '$stateParams',
-            (ProjectResource, $stateParams)->
-              ProjectResource.getListAds( $stateParams.projectId, $stateParams.listId )
+            'Ads', '$stateParams',
+            (Ads, $stateParams)->
+              Ads.initializeList( $stateParams.listId, $stateParams.projectId )
           ]
   ]
 
@@ -90,14 +90,15 @@ do (app=angular.module "trouverDesTerrains.projetDetail", [
 
 
   app.controller 'AdsController', [
-    '$scope', 'ads', '$state', '$stateParams', 'ProjectResource', 'ListPicker', 'Lists', 'Project',
-    ($scope, ads, $state, $stateParams, ProjectResource, ListPicker, Lists, Project) ->
+    '$scope', 'ads', '$state', '$stateParams', 'ProjectResource', 'ListPicker', 'Lists', 'Project', 'Ads',
+    ($scope, ads, $state, $stateParams, ProjectResource, ListPicker, Lists, Project, Ads) ->
+
+      $scope.Ads = Ads
+      $scope.Lists = Lists
+      $scope.Project = Project
 
       $scope.$state = $state
       $scope.$stateParams = $stateParams
-      $scope.ads = ads.ads
-      $scope.Lists = Lists
-      $scope.Project = Project
 
       $scope.selectAd = (ad)->
         $state.go '.ad', projectId: $stateParams.projectId, adId: ad.id

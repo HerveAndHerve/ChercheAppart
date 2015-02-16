@@ -9,14 +9,14 @@ div( layout="row" )
         md-content
           md-list( layout="column" )
             md-item(
-              ng-hide="ads.length"
+              ng-hide="Ads.ads.length"
             )
               md-divider
               md-item-content
                 div.md-tile-content
                   Il n'y a pas d'annonces dans cette liste
             md-item( 
-              ng-repeat="ad in ads"
+              ng-repeat="ad in Ads.ads"
               ng-hide="ad.hide"
               md-swipe-left="archiveAd();"
               md-swipe-right="openMoveAdModal(ad, $event)"
@@ -36,8 +36,9 @@ div( layout="row" )
                     div
                       md-button.md-accent( 
                         ng-click="archiveAd(ad)"
+                        aria-label="archive"
                       )
                         span.fa.fa-archive.fa-lg
 
-                      md-button.md-primary( ng-click="openMoveAdModal(ad, $event)" )
+                      md-button.md-primary( ng-click="openMoveAdModal(ad, $event)" aria-label="enlist" )
                         span.fa.fa-list.fa-lg

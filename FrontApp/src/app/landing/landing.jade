@@ -1,9 +1,10 @@
 div.landing-background( layout="column", layout-align="center center" )
   div( flex=35 )
   div( layout="column" layout-align="space-around center" class="big-padding center" )
-    h4.text-white.landing-title Woodstack terrains
-    h1.text-white Cherchez votre appart facilement
+    h4.text-white.landing-title Cherche Appart 
+    h1.text-white Cherchez votre appart parisien facilement
     md-button.md-primary.md-raised.signin-button( 
+      aria-label="google login"
       ng-click="googleAuthenticate()" 
       style="margin-bottom: 10px; width: 300px"
     )
@@ -11,6 +12,7 @@ div.landing-background( layout="column", layout-align="center center" )
       | &nbsp; connexion avec google
 
     md-button.md-primary.md-raised.signin-button( 
+      aria-label="facebook login"
       ng-click="facebookAuthenticate()" 
       style="width: 300px"
     )

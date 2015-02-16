@@ -46,6 +46,7 @@ do (app=angular.module "trouverDesTerrains.projets", [
           @batchIndex = 0
 
         initializeList: (listId, projectId)->
+          console.log 'init list'
           @ads = []
           @listId = listId
           @projectId = projectId
@@ -56,6 +57,7 @@ do (app=angular.module "trouverDesTerrains.projets", [
         loadNextBatch: ()->
           that = @
           if that.listId and that.projectId and not that.loading
+            console.log 'next batch'
             that.loading = true
             start = that.batchIndex * batchSize
             end = ((that.batchIndex + 1) * batchSize) - 1

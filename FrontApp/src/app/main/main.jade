@@ -17,9 +17,11 @@ div.full-height( layout="column", layout-fill )
       span.fa.fa-search( 
         ng-show="$state.includes('main.project')" 
         ui-sref="main.project.edit"
+        style="margin-right: 20px"
       )
       span.fa.fa-power-off(
         ng-click="Auth.logout()"
+        style="margin-right: 20px"
       )
 
   md-content(

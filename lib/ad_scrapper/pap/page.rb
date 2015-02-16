@@ -12,7 +12,7 @@ module AdScrapper
             surface:     (p.xpath(".//span[contains(@class,'surface')]/..").children[2].text.strip.to_i rescue nil),
             description: (p.xpath(".//div[contains(@class,'description')]/p").first.text.strip rescue nil),
             url:         ((relative = p.xpath(".//a").first.attributes["href"].value rescue nil).blank? ? nil : relative.prepend("http://pap.fr")),
-            img:         (p.xpath(".//img").first.attributes["src"].value rescue nil),
+            img:         ( src = (p.xpath(".//img").first.attributes["src"].value rescue nil) ; src.match(/\A\/images/) ? src.prepend('http://pap.fr') : src),
           }
         end
       end

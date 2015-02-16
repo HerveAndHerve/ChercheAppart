@@ -22,7 +22,13 @@ namespace :ads do
     sl = AdScrapper::SeLoger::Scrapper.new.delayed_save_new_ads!
   end
 
+  desc "get pap.fr ads"
+  task pap: :environment do
+    puts "fetching ads from pap.fr"
+    pap = AdScrapper::Pap::Scrapper.new.delayed_save_new_ads!
+  end
+
   desc "scrap the ouèbe to find new ads"
-  task update: [:environment,:seloger]
+  task update: [:environment,:seloger,:pap]
 
 end

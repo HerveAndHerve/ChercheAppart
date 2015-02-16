@@ -15,7 +15,7 @@ module AdScrapper
 
       def get_page(district,i)
         AdScrapper::Pap::Page.new(
-          "http://www.pap.fr/annonce/locations-appartement-#{district_code(district)}",
+          "http://www.pap.fr/annonce/locations-appartement-#{district_code(district)}-#{i}",
           district
         )
       end

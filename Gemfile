@@ -59,6 +59,6 @@ gem 'devise'
 gem 'omniauth-google-oauth2'
 gem 'figaro'
 
-gem 'nokogiri'
+gem 'nokogiri', '1.6.5'
 
 gem 'stripe'

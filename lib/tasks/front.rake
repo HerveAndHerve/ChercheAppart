@@ -8,7 +8,6 @@ namespace :front do
       sh "npm install"
       sh "bower install"
       sh "gulp test"
-      sh "rsync -Pa bin/ ../public/"
     end
   end
 

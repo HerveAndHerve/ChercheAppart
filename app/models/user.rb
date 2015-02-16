@@ -9,7 +9,7 @@ class User
   field :uid
   field :first_name, type: String, default: ""
   field :last_name, type: String, default: ""
-  field :allowed_moves_count, type: Integer, default: (ENV["FREE_MOVES_LIMIT"] || 20).to_i
+  field :allowed_moves_count, type: Integer, default: (ENV["FREE_MOVES_LIMIT"] || 2_000).to_i
 
   has_and_belongs_to_many :projects, class_name: "Project", inverse_of: :owners
 
@@ -53,11 +53,9 @@ class User
     [first_name || '', last_name || ''].map(&:capitalize).join(" ")
   end
 
-  class << self
-    def serialize_from_session(key,salt)
-      record = to_adapter.get(key[0]["$oid"]) || to_adapter.get(key)
-      record if record && record.authenticatable_salt == salt
-    end
+  def claim_project!(project,token)
+    return nil unless project.token == token
+    return project.owners << self
   end
 
   def enlist_ad!(project, ad,list_name_or_id)
@@ -80,6 +78,15 @@ class User
       list.save
     end
   end
+
+  #{{{ mongo/devise monkey patch
+  class << self
+    def serialize_from_session(key,salt)
+      record = to_adapter.get(key[0]["$oid"]) || to_adapter.get(key)
+      record if record && record.authenticatable_salt == salt
+    end
+  end
+  #}}}
 
   private
 

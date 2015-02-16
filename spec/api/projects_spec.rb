@@ -1,12 +1,21 @@
 describe MyApi::V1::Projects do 
 
-  #{{{ index
-  describe :index do 
+
+  #{{{ index/show
+  describe :index_and_show do 
+    before do
+      @project = FactoryGirl.create(:project)
+    end
     subject(:index) { get '/api/projects' }
+    subject(:get_project) { get "api/projects/#{@project.id}"}
 
     context 'when logged off' do 
-      it "requires login" do 
+      it "index requires login" do 
         index
+        expect(response.status).to eq 401
+      end
+      it "index requires login" do 
+        get_project
         expect(response.status).to eq 401
       end
     end
@@ -14,10 +23,16 @@ describe MyApi::V1::Projects do
     context 'when logged in' do 
       before do 
         sign_up_and_login!
+        @project.owners << @user
       end
-      it "shows my projects" do 
+      it "index shows my projects" do 
         index
         expect(parsed_response.has_key?("projects")).to be true
+      end
+      it "get shows my project" do 
+        get_project
+        expect(parsed_response.has_key?("project")).to be true
+        expect(parsed_response["project"]["id"]).to eq @project.id.to_s
       end
     end
 
@@ -167,6 +182,22 @@ describe MyApi::V1::Projects do
         expect(parsed_response["error"]).to eq "quota_excedeed"
       end
 
+    end
+  end
+  #}}}
+
+  #{{{ claim
+  describe :claim do
+    before do 
+      sign_up_and_login!
+      @p = FactoryGirl.create(:project)
+      @p.owners = [] ; @p.save
+    end
+
+    subject(:claim) { get "api/projects/#{@p.id}/claim", token: @p.token}
+
+    it 'claims project' do
+      expect{claim}.to change{Project.last.owners.include?(@user)}.from(false).to(true)
     end
   end
   #}}}

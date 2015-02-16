@@ -52,10 +52,38 @@ module MyApi
         end
         #}}}
 
+        #{{{ claim
+        desc "claim ownership of this project using a shareable token"
+        params do
+          requires :token, desc: "the shareable token"
+        end
+        get ':project_id/claim' do
+          if p = Project.find(params[:project_id]) and current_user.claim_project!(p,params[:token])
+            present :project, p, with: MyApi::Entities::Project
+          else
+            error!("wrong project_id/token combination",403)
+          end
+        end
+        #}}}
+
         namespace ':project_id' do 
           before do 
             @project = current_user.projects.find(params[:project_id]) || error!("not found",404)
           end
+
+          #{{{ shareable_token
+          desc "get a shareable token to share ownership on this project"
+          get :shareable_token do 
+            present :token, @project.token
+          end
+          #}}}
+
+          #{{{ get
+          desc 'get project description'
+          get do 
+            present :project, @project, with: MyApi::Entities::Project
+          end
+          #}}}
 
           #{{{ update
           desc "update name, or search criteria"

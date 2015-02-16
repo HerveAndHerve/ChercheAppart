@@ -53,6 +53,10 @@ class User
     [first_name || '', last_name || ''].map(&:capitalize).join(" ")
   end
 
+  def claim_project!(project,token)
+    return nil unless project.token == token
+    return project.owners << self
+  end
 
   def enlist_ad!(project, ad,list_name_or_id)
     raise "user doesn't own this project" unless project.owners.include? self

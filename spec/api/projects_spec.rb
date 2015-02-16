@@ -186,4 +186,20 @@ describe MyApi::V1::Projects do
   end
   #}}}
 
+  #{{{ claim
+  describe :claim do
+    before do 
+      sign_up_and_login!
+      @p = FactoryGirl.create(:project)
+      @p.owners = [] ; @p.save
+    end
+
+    subject(:claim) { get "api/projects/#{@p.id}/claim", token: @p.token}
+
+    it 'claims project' do
+      expect{claim}.to change{Project.last.owners.include?(@user)}.from(false).to(true)
+    end
+  end
+  #}}}
+
 end

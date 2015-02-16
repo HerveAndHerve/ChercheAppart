@@ -27,7 +27,7 @@ module AdScrapper
             nb_par_page = @pages[district][1].content.xpath(".//select[contains(@id,'nb_resultats_par_page')]/option[contains(@selected,'selected')]").text.strip.chomp.match(/(\d.+)/)[1].to_i
             return 0 if nb_annonces <= 0 or nb_par_page == 0
             nb = (nb_annonces / nb_par_page ).ceil
-            puts "[seloger.com]: found #{nb} pages of results in district #{district}" 
+            puts "[pap.fr]: found #{nb} pages of results in district #{district}" 
             nb
           )
         end

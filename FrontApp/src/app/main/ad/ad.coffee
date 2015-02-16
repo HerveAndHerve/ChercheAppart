@@ -6,7 +6,7 @@ do (app=angular.module "trouverDesTerrains.ad", [
       .state 'main.project.news.ad',
         url: '/ad/:adId'
         views:
-          "main@":
+          "main@main":
             controller: 'AdController'
             templateUrl: '/app/main/ad/ad.html'
         data:
@@ -18,10 +18,10 @@ do (app=angular.module "trouverDesTerrains.ad", [
               ProjectResource.getAd( $stateParams.adId )
           ]
 
-      .state 'main.project.categories.category.ad',
+      .state 'main.project.list.ad',
         url: '/ad/:adId'
         views:
-          "main@":
+          "main@main":
             controller: 'AdController'
             templateUrl: '/app/main/ad/ad.html'
         data:
@@ -36,7 +36,7 @@ do (app=angular.module "trouverDesTerrains.ad", [
       .state 'main.project.archived.ad',
         url: '/ad/:adId'
         views:
-          "main@":
+          "main@main":
             controller: 'AdController'
             templateUrl: '/app/main/ad/ad.html'
         data:
@@ -50,9 +50,13 @@ do (app=angular.module "trouverDesTerrains.ad", [
   ]
 
   app.controller 'AdController', [
-    '$scope', '$stateParams', 'ListPicker', 'ad', 'ProjectResource', '$state',
-    ($scope, $stateParams, ListPicker, ad, ProjectResource, $state) ->
-      $scope.ad = ad
+    '$scope', '$stateParams', 'ListPicker', 'ad', 'ProjectResource', '$state', '$sce',
+    ($scope, $stateParams, ListPicker, ad, ProjectResource, $state, $sce) ->
+      $scope.ad = ad.ad
+
+      $scope.trust = (url)->
+        $sce.trustAsResourceUrl(url)
+
       $scope.archiveAd = ()->
         ProjectResource.archiveAd($stateParams.projectId, $stateParams.adId)
         $state.go '^', null, reload: true
@@ -62,4 +66,15 @@ do (app=angular.module "trouverDesTerrains.ad", [
         ListPicker.openMoveAdModal(id: $stateParams.adId, event).then onSuccess
 
       $scope.$stateParams = $stateParams
+  ]
+
+  app.directive 'iframeResize', [
+    ()->
+      ($scope, elem, attr)->
+        elem.on 'load', ()->
+          height = elem[0].contentWindow.document.body.scrollHeight + 'px'
+          widht = '100%'
+          elem.css 'width', width
+          elem.css 'height', height
+
   ]

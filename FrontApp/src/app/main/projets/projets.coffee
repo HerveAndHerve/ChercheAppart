@@ -10,9 +10,21 @@ do (app=angular.module "trouverDesTerrains.projets", [
     'ProjectResource', '$state',
     (ProjectResource, $state)->
       new class Project
+        constructor: ()->
+          @project = {}
+
+        loadProject: (projectId)->
+          that = @
+          onSuccess = (success)->
+            that.project = success.projects[0]
+          ProjectResource.getProjects().then onSuccess
+
         createProject: (project)->
           onSuccess = (success)->
-            $state.go 'main.project.new', projectId: success.id
+            console.log success
+            $state.go 'main.project.news', projectId: success.project.id
+          onError = (error)->
+            console.log error
           ProjectResource.postProject(project).then onSuccess
         
   ]
@@ -43,7 +55,7 @@ do (app=angular.module "trouverDesTerrains.projets", [
             .one 'projects', projectId
             .customGET 'lists'
 
-        getCategoryAds: (projectId, listId)->
+        getListAds: (projectId, listId)->
           Restangular
             .one 'projects', projectId
             .one 'lists', listId
@@ -77,6 +89,6 @@ do (app=angular.module "trouverDesTerrains.projets", [
 
         getAd: (adId)->
           Restangular
-            .one 'ads', adId
+            .one 'my_ads', adId
             .customGET null
   ]

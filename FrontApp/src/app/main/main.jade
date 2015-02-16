@@ -22,8 +22,8 @@ div.full-height( layout="column", layout-fill )
   md-content(
     class="full-width grey-bg landing-background"
     style="height: 100%" 
-    infinite-scroll="test()" 
-    infinite-scroll-distance="1" 
-    infinite-scroll-immediate-check="true"
+    infinite-scroll="loadMoreAds()" 
+    infinite-scroll-distance="3" 
+    infinite-scroll-immediate-check="false"
   )
     div( ui-view="main", style="min-height: 100%" ng-class="{'wrapper': $state.current.data.wrapper == undefined}")

@@ -51,12 +51,15 @@ do (app=angular.module "trouverDesTerrains", [
   ]
 
   app.controller 'AppController', [
-    '$scope', '$mdSidenav', '$state', 'Auth',
-    ($scope, $mdSidenav, $state, Auth) ->
+    '$scope', '$mdSidenav', '$state', 'Auth', 'Ads',
+    ($scope, $mdSidenav, $state, Auth, Ads) ->
       $scope.Auth = Auth
       $scope.$state = $state
       $scope.toggleLeftNav = ->
         $mdSidenav( 'sidenav-left' ).toggle()
+
+      $scope.loadMoreAds = ()->
+        Ads.loadNextBatch()
   ]
 
   # Configuration block for Restangular, the service

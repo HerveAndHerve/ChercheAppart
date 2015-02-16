@@ -13,7 +13,10 @@ do (app=angular.module "trouverDesTerrains.new", [
         action: 'create'
       resolve:
         project: ['$q', ($q)->
-          $q.when({})
+          Project = ()->
+            @name = ''
+            @search_criteria = {}
+          $q.when(new Project)
         ]
   ]
 
@@ -28,15 +31,14 @@ do (app=angular.module "trouverDesTerrains.new", [
         pageTitle: 'Nouveau projet'
         action: 'create'
       resolve:
-        project: ['Project', '$q', (Project, $q)->
-          $q.when({})
+        project: ['Project', '$stateParams', (Project, $stateParams)->
+          Project.loadProject($stateParams.projectId)
         ]
   ]
 
   app.controller 'NewController', [
     '$scope', 'Project', '$state', 'project',
     ($scope, Project, $state, project) ->
-      console.log project
       $scope.action = $state.current.data.action
       $scope.project = project
       $scope.createProject = ->

@@ -8,6 +8,40 @@ div.big-padding
         type="text"
         name="name"
       )
+    md-input-container
+      label Surface minimale : (m
+        sup 2
+        | )
+      input(
+        ng-model="project.search_criteria.min_surface"
+        type="number"
+        name="surface min"
+      )
+    md-input-container
+      label Surface maximale : (m
+        sup 2
+        | )
+      input(
+        ng-model="project.search_criteria.max_surface"
+        type="number"
+        name="surface max"
+      )
+    md-input-container
+      label Loyer minimal : (&euro;)
+      input(
+        ng-model="project.search_criteria.min_price"
+        type="number"
+        name="prix min"
+      )
+    md-input-container
+      label Loyer maximal : (&euro;)
+      input(
+        ng-model="project.search_criteria.max_price"
+        type="number"
+        name="prix max"
+      )
+
+
 
     div( layout, layout-align="end", style="margin-top: 30px" )
       md-button.md-raised.md-warn( 

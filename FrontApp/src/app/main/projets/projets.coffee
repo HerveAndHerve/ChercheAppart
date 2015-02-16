@@ -21,7 +21,10 @@ do (app=angular.module "trouverDesTerrains.projets", [
 
         createProject: (project)->
           onSuccess = (success)->
-            $state.go 'main.project.new', projectId: success.id
+            console.log success
+            $state.go 'main.project.news', projectId: success.project.id
+          onError = (error)->
+            console.log error
           ProjectResource.postProject(project).then onSuccess
         
   ]

@@ -57,6 +57,13 @@ module MyApi
             @project = current_user.projects.find(params[:project_id]) || error!("not found",404)
           end
 
+          #{{{ get
+          desc 'get project description'
+          get do 
+            present :project, @project, with: MyApi::Entities::Project
+          end
+          #}}}
+
           #{{{ update
           desc "update name, or search criteria"
           params do 

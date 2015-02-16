@@ -19,5 +19,11 @@ div.full-height( layout="column", layout-fill )
         ui-sref="main.project.edit"
       )
 
-  md-content(class="full-width grey-bg landing-background" style="min-height: 100%" infinite-scroll="console.log('lol')" infinite-scroll-distance="1" infinite-scroll-immediate-check="true")
+  md-content(
+    class="full-width grey-bg landing-background"
+    style="height: 100%" 
+    infinite-scroll="test()" 
+    infinite-scroll-distance="1" 
+    infinite-scroll-immediate-check="true"
+  )
     div( ui-view="main", style="min-height: 100%" ng-class="{'wrapper': $state.current.data.wrapper == undefined}")

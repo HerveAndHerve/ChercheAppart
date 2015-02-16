@@ -9,7 +9,7 @@ globs.jade = [
   '!src/index.jade'
 ]
 globs.src = 'src/**/*'
-globs.assets = 'src/assets/**/*'
+globs.assets = 'src/front_assets/**/*'
 globs.index = "src/index.jade"
 globs.vendor = 'vendor/**/*'
 
@@ -29,18 +29,18 @@ globs.build = [
   'build/app/**/*.js'
   'build/common/**/*.js'
   'build/style/**/*.css'
-  'build/assets/**'
+  'build/front_assets/**'
 ]
 
 # ------------------------------------ #
 # ---------------- bin --------------- #
 # ------------------------------------ #
 globs.bin = [
-  'bin/assets/*.js'
-  'bin/assets/*.css'
+  'bin/front_assets/*.js'
+  'bin/front_assets/*.css'
   'bin/index.html'
 ]
-globs.compiled_assets = 'bin/assets/**'
+globs.compiled_assets = 'bin/front_assets/**'
 
 globs.sass = [
   'src/**/*.scss'

@@ -36,10 +36,10 @@ src_dir = 'src/'
 build_dir = 'build/'
 build_app_dir = 'build/app/'
 build_vendor_dir = 'build/vendor/'
-build_assets_dir = 'build/assets/'
+build_assets_dir = 'build/front_assets/'
 
 compile_dir = 'bin/'
-compile_assets_dir = 'bin/assets/'
+compile_assets_dir = 'bin/front_assets/'
 
 
 

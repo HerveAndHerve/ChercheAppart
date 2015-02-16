@@ -26,8 +26,8 @@ do (app=angular.module "trouverDesTerrains.main", [
   ]
 
   app.controller 'MainController', [
-    '$state', '$scope', '$stateParams',
-    ($state, $scope, $stateParams)->
+    '$state', '$scope', '$stateParams', 'Project',
+    ($state, $scope, $stateParams, Project)->
       $scope.$state = $state
       $scope.$stateParams = $stateParams
   ]

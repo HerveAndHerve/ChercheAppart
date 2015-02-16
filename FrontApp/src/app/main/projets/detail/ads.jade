@@ -1,4 +1,7 @@
-div( layout="row" )
+div( 
+  layout="row" 
+  style="margin-bottom: 300px"
+)
   section( style="position: relative" flex )
     div.md-subheader.md-default-theme
       div.md-subheader-content
@@ -42,3 +45,10 @@ div( layout="row" )
 
                       md-button.md-primary( ng-click="openMoveAdModal(ad, $event)" aria-label="enlist" )
                         span.fa.fa-list.fa-lg
+            md-item(
+              ng-show="Ads.ads.length && !Ads.fullyLoaded()"
+            )
+              md-item-content
+                div.md-tile-content( layout="row" layout-align="center" )
+                  md-button.md-accent( aria-label="load more" ng-click="Ads.loadNextBatch()")
+                    charger plus d'annonces

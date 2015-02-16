@@ -45,6 +45,7 @@ do (app=angular.module "trouverDesTerrains.projets", [
           @listId = null
           @projectId = null
           @batchIndex = 0
+          @total_count = 1000000
 
         initializeList: (listId, projectId)->
           @ads = []
@@ -53,6 +54,9 @@ do (app=angular.module "trouverDesTerrains.projets", [
           @batchIndex = 0
           @loadNextBatch()
           @loading = false
+
+        fullyLoaded: ()->
+          batchSize * batchIndex >= total_count
 
         loadNextBatch: ()->
           that = @
@@ -64,6 +68,7 @@ do (app=angular.module "trouverDesTerrains.projets", [
             onSuccess = (success)->
               that.batchIndex += 1
               that.loading = false
+              that.total_count = success.total_count
               if success.ads
                 if success.ads.length
                   that.ads = that.ads.concat success.ads

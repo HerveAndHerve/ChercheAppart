@@ -10,8 +10,9 @@ div.full-height( layout="column", layout-fill )
       span.fa.fa-bars( 
         ng-click="toggleLeftNav()"
         style="cursor: pointer" hide-gt-md
+        ng-show="$state.includes('main.project')" 
       )
-      a.pacifico( ui-sref="main.projects" hide-gt-md )  &nbsp; &nbsp; Cherche ton appart
+      a.pacifico( ui-sref="main.projects" hide-gt-md )  &nbsp; &nbsp; ChercheAppart
       div( ui-view="title" ) 
       div( flex )
       span.fa.fa-search( 

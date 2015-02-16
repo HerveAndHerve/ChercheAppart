@@ -62,6 +62,7 @@ globs.vendor_js = [
   'vendor/angular-typeahead/angular-typeahead.js'
   'vendor/ionrangeslider/js/ion.rangeSlider.js'
   'vendor/angular-bootstrap/ui-bootstrap-tpls.js'
+  'vendor/ngInfiniteScroll/build/ng-infinite-scroll.js'
 ]
 
 globs.karma = globs.vendor_js

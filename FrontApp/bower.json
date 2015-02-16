@@ -12,7 +12,8 @@
     "angular-material": "~0.7.0",
     "restangular": "~1.4.0",
     "angular-typeahead": "~0.2.1",
-    "hammerjs": "~2.0.4"
+    "hammerjs": "~2.0.4",
+    "ngInfiniteScroll": "~1.2.0"
   },
   "dependencies": {},
   "resolutions": {

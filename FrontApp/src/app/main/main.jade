@@ -10,9 +10,8 @@ div.full-height( layout="column", layout-fill )
       span.fa.fa-bars( 
         ng-click="toggleLeftNav()"
         style="cursor: pointer" hide-gt-md
-        ng-show="$state.includes('main.project')"
       )
-      a.pacifico( ui-sref="main.projects" hide-gt-md)  &nbsp; &nbsp; Cherche ton appart 
+      a.pacifico( ui-sref="main.projects")  &nbsp; &nbsp; Cherche ton appart 
       div( ui-view="title" ) 
       div( flex )
       span.fa.fa-search( 
@@ -20,5 +19,5 @@ div.full-height( layout="column", layout-fill )
         ui-sref="main.project.edit"
       )
 
-  md-content(class="full-width full-height grey-bg landing-background")
-    div( ui-view="main", class="full-height" ng-class="{'wrapper': $state.current.data.wrapper == undefined}")
+  md-content(class="full-width grey-bg landing-background" style="min-height: 100%" infinite-scroll="console.log('lol')" infinite-scroll-distance="1" infinite-scroll-immediate-check="true")
+    div( ui-view="main", style="min-height: 100%" ng-class="{'wrapper': $state.current.data.wrapper == undefined}")

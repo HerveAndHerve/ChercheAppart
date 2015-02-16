@@ -3,6 +3,7 @@ do(app=angular.module 'templates', [])->
 do (app=angular.module "trouverDesTerrains", [
   'ui.router'
   'ui.bootstrap'
+  'infinite-scroll'
   'ngMaterial'
   'templates'
   'siyfion.sfTypeahead'

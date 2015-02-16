@@ -18,6 +18,9 @@ div.full-height( layout="column", layout-fill )
         ng-show="$state.includes('main.project')" 
         ui-sref="main.project.edit"
       )
+      span.fa.fa-power-off(
+        ng-click="Auth.logout()"
+      )
 
   md-content(
     class="full-width grey-bg landing-background"

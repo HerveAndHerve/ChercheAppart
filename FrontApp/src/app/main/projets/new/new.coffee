@@ -7,7 +7,7 @@ do (app=angular.module "trouverDesTerrains.new", [
       views:
         "main@main":
           controller: 'NewController'
-          templateUrl: 'app/main/projets/new/new.html'
+          templateUrl: '/app/main/projets/new/new.html'
       data:
         pageTitle: 'Nouveau projet'
         action: 'Créer le projet'
@@ -27,7 +27,7 @@ do (app=angular.module "trouverDesTerrains.new", [
       views:
         "main@main":
           controller: 'EditController'
-          templateUrl: 'app/main/projets/new/new.html'
+          templateUrl: '/app/main/projets/new/new.html'
         "sidenav@main":
           templateUrl: '/app/main/projets/detail/sidenav.html'
           controller: 'ListsSidenavController'

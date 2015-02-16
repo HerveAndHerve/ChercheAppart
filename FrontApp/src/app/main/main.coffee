@@ -10,7 +10,7 @@ do (app=angular.module "trouverDesTerrains.main", [
       views:
         "main":
           controller: "MainController"
-          templateUrl: 'app/main/main.html'
+          templateUrl: '/app/main/main.html'
       data:
         pageTitle: 'main'
 

@@ -3,7 +3,6 @@ namespace :front do
   desc "test front application"
   task :test do 
     Dir.chdir('FrontApp') do
-      puts "pending"
       sh "pwd"
       sh "npm install"
       sh "bower install"
@@ -14,7 +13,6 @@ namespace :front do
   desc "build front application"
   task :build do 
     Dir.chdir('FrontApp') do
-      puts "pending"
       sh "pwd"
       sh "npm install"
       sh "bower install"

@@ -4,6 +4,11 @@ namespace :front do
   task :test do 
     Dir.chdir('FrontApp') do
       puts "pending"
+      sh "pwd"
+      sh "npm install"
+      sh "bower install"
+      sh "gulp:test"
+      sh "rsync -Pa bin/ ../public/"
     end
   end
 
@@ -11,11 +16,11 @@ namespace :front do
   task :build do 
     Dir.chdir('FrontApp') do
       puts "pending"
-      #sh "pwd"
-      #sh "npm install"
-      #sh "bower install"
-      #sh "grunt"
-      #sh "rsync -Pa bin/ ../public/"
+      sh "pwd"
+      sh "npm install"
+      sh "bower install"
+      sh "gulp:compile"
+      sh "rsync -Pa bin/ ../public/"
     end
   end
 

@@ -12,7 +12,7 @@ div.full-height( layout="column", layout-fill )
         style="cursor: pointer" hide-gt-md
         ng-show="$state.includes('main.project')" 
       )
-      a.pacifico( ui-sref="main.projects" hide-gt-md )  &nbsp; &nbsp; ChercheAppart
+      a( ui-sref="main.projects" hide-gt-md ) &nbsp; ChercheAppart
       div( ui-view="title" ) 
       div( flex )
       span.fa.fa-search( 
@@ -28,7 +28,5 @@ div.full-height( layout="column", layout-fill )
   md-content(
     class="full-width grey-bg landing-background"
     style="height: 100%" 
-    infinite-scroll="loadMoreAds()" 
-    infinite-scroll-distance="1" 
   )
-    div( ui-view="main", style="height: 100%" ng-class="{'wrapper': $state.current.data.wrapper == undefined}")
+    div( ui-view="main", ng-class="{'wrapper': $state.current.data.wrapper == undefined}")

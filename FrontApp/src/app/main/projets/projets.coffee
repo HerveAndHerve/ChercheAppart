@@ -56,7 +56,7 @@ do (app=angular.module "trouverDesTerrains.projets", [
           @loading = false
 
         fullyLoaded: ()->
-          batchSize * batchIndex >= total_count
+          batchSize * @batchIndex >= @total_count
 
         loadNextBatch: ()->
           that = @

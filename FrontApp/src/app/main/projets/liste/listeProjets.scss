@@ -12,9 +12,9 @@ $news-count-margin: 1em;
   width: $news-count-width;
   height: $news-count-width;
   border-radius: $news-count-width / 2;
-  background-color: transparent;
-  margin-right: $news-count-margin;
-  color: $indigo;
+  background-color: rgba( 0, 0, 0, 0.15 );
+  margin: $news-count-margin;
+  color: white;
 }
 
 md-item.active .news-count {

@@ -4,6 +4,16 @@ section
       h2.md-subheader-content Mes projets
 
   md-list( layout="column" )
+    md-item( layout="row" layout-align="center" ng-hide="projects.length" )
+      md-divider
+      md-item-content
+        div.md-tile-left
+          md-button.md-raised.md-warn(
+            aria-label="Créer votre projet"
+            ui-sref="main.newProject"
+          )
+            span.fa.fa-plus
+            |  Créez votre premier projet
     md-item( 
       ng-repeat="project in projects"
       ng-click="navToProject(project)"
@@ -17,14 +27,9 @@ section
             layout="row"
             layout-align="center center" 
           )
-            span {{ project.new_lands_count }}
+            span {{ project.new_ads_count }}
         div.md-tile-content
           h3.text-cyan {{ project.name }} 
-          h4 {{ project.town.readable_name }}
-          p 
-            | à moins de {{ project.max_distance / 1000 | number }} km - 
-            | surface entre {{ project.min_surface | number }} et {{ project.max_surface }} m
-            sup 2
 
 md-button.action-button.md-warn.md-fab( 
   ui-sref="main.newProject"

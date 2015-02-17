@@ -61,6 +61,7 @@ do (app=angular.module "trouverDesTerrains", [
     '$scope', '$mdSidenav', '$state', 'Auth', 'Ads',
     ($scope, $mdSidenav, $state, Auth, Ads) ->
       $scope.$state = $state
+      $scope.Auth = Auth
       $scope.toggleLeftNav = ->
         $mdSidenav( 'sidenav-left' ).toggle()
 

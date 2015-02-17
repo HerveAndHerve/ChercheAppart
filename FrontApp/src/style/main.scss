@@ -107,15 +107,9 @@ md-tabs.md-white-theme md-tab {
   font-family: 'Pacifico', 'Roboto', sans-serif;
 }
 
-md-item.active {
-  color: white;
-  background-color: $indigo;
-}
-
 md-item.active md-item-content {
-  background-color: $indigo;
   .md-tile-content {
-    color: white !important;
+    color: $indigo !important;
   }
 }
 

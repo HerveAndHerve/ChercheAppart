@@ -21,7 +21,7 @@ div(
             md-item( 
               ng-repeat="ad in Ads.ads"
               ng-hide="ad.hide"
-              md-swipe-left="archiveAd();"
+              md-swipe-left="archiveAd()"
               md-swipe-right="openMoveAdModal(ad, $event)"
             )
               md-divider

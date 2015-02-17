@@ -18,9 +18,9 @@ do (app=angular.module "trouverDesTerrains", [
     '$mdThemingProvider',
     ($mdThemingProvider)->
       $mdThemingProvider.theme('default')
-        .primaryColor('indigo')
-        .accentColor('orange')
-        .warnColor('pink')
+        .primaryPalette('indigo')
+        .accentPalette('orange')
+        .warnPalette('pink')
   ])
 
   app.run([
@@ -54,7 +54,6 @@ do (app=angular.module "trouverDesTerrains", [
   app.controller 'AppController', [
     '$scope', '$mdSidenav', '$state', 'Auth', 'Ads',
     ($scope, $mdSidenav, $state, Auth, Ads) ->
-      $scope.Auth = Auth
       $scope.$state = $state
       $scope.toggleLeftNav = ->
         $mdSidenav( 'sidenav-left' ).toggle()

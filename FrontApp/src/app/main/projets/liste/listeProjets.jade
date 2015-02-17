@@ -26,5 +26,8 @@ section
             | surface entre {{ project.min_surface | number }} et {{ project.max_surface }} m
             sup 2
 
-md-button.action-button.md-warn.md-fab( ui-sref="main.newProject")
+md-button.action-button.md-warn.md-fab( 
+  ui-sref="main.newProject"
+  aria-label="new project"
+)
   span.fa.fa-plus

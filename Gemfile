@@ -62,3 +62,4 @@ gem 'figaro'
 gem 'nokogiri', '1.6.5'
 
 gem 'stripe'
+gem 'postmark-rails'

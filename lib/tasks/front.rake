@@ -32,6 +32,6 @@ namespace :front do
   end
 
   desc "setup and build front" 
-  task :deploy, [:environment, :setup, :build]
+  task deploy: [:environment, :setup, :build]
 
 end

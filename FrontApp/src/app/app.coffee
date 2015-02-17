@@ -15,6 +15,12 @@ do (app=angular.module "trouverDesTerrains", [
 ]) ->
 
   app.config ([
+    '$uiViewScrollProvider',
+    ($uiViewScrollProvider)->
+      $uiViewScrollProvider.useAnchorScroll()
+  ])
+
+  app.config ([
     '$mdThemingProvider',
     ($mdThemingProvider)->
       $mdThemingProvider.theme('default')

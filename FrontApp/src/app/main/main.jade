@@ -1,18 +1,13 @@
-md-sidenav( 
-  md-is-locked-open="$media('gt-md')" 
-  md-component-id="sidenav-left" 
-  ui-view="sidenav" 
-  ng-show="$state.includes('main.project')"
-)
-div.full-height( layout="column", layout-fill )
-  md-toolbar.md-primary( style="position: relative" )
+div( layout="column" layout-fill style="height: 100%; overflow: hidden" )
+  md-toolbar.md-primary
     h1.md-toolbar-tools 
       span.fa.fa-bars( 
         ng-click="toggleLeftNav()"
-        style="cursor: pointer" hide-gt-md
+        style="cursor: pointer"
+        hide-gt-md
         ng-show="$state.includes('main.project')" 
       )
-      a( ui-sref="main.projects" hide-gt-md ) &nbsp; ChercheAppart
+      a( ui-sref="main.projects") &nbsp; ChercheAppart
       div( ui-view="title" ) 
       div( flex )
       span.fa.fa-search( 
@@ -25,8 +20,16 @@ div.full-height( layout="column", layout-fill )
         style="margin-right: 20px"
       )
 
-  md-content(
-    class="full-width grey-bg landing-background"
-    style="height: 100%" 
-  )
-    div( ui-view="main", ng-class="{'wrapper': $state.current.data.wrapper == undefined, 'full-height': $state.current.data.wrapper !== undefined}")
+  div.landing-background( layout="row" layout-fill )
+    md-sidenav.content-height( 
+      md-is-locked-open="$media('gt-md')" 
+      md-component-id="sidenav-left" 
+      autoscroll="false"
+      ui-view="sidenav" 
+      ng-show="$state.includes('main.project')"
+    )
+
+    md-content(
+      class="full-width grey-bg content-height"
+    )
+      div( ui-view="main" ng-class="{'wrapper': $state.current.data.wrapper == undefined, 'full-height': $state.current.data.wrapper !== undefined}")

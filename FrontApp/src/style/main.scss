@@ -118,3 +118,10 @@ md-item.active md-item-content {
 .border-right {
   border-right: 1px solid rgba(0, 0, 0, 0.12);
 }
+
+.full-content-height {
+  height: calc(100% - 64px);
+  @media (max-width: 600px ){
+    height: 100%;
+  }
+}

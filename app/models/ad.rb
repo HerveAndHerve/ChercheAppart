@@ -26,11 +26,11 @@ class Ad
     return active
   end
 
-  after_save :send_email_alerts!
+  after_save :send_alert_emails!
 
   protected
 
-  def send_email_alerts!
+  def send_alert_emails!
     projects = Project
     .where(send_alert_emails: true)
     .lte('search_criteria.min_surface' => surface)
@@ -39,7 +39,11 @@ class Ad
     .gte('search_criteria.max_price' => price)
     .any_in(district: [district,nil])
 
-    owners = User.find(projects.distinct(:owner_ids))
+    projects.each do |project|
+      project.owners.each do |user|
+        NewAdAlert.notify(user,project,self).deliver
+      end
+    end
 
   end
 

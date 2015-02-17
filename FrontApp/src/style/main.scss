@@ -17,11 +17,14 @@
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
-  src: local('Roboto Regular'), local('Roboto-Regular'), url(fonts/Roboto-Regular.woff) format('woff');
 }
 
 .full-height {
   height: 100%;
+}
+
+.content-height {
+  height: calc( 100% - 64px );
 }
 
 .full-width {
@@ -104,15 +107,9 @@ md-tabs.md-white-theme md-tab {
   font-family: 'Pacifico', 'Roboto', sans-serif;
 }
 
-md-item.active {
-  color: white;
-  background-color: $indigo;
-}
-
 md-item.active md-item-content {
-  background-color: $indigo;
   .md-tile-content {
-    color: white !important;
+    color: $indigo !important;
   }
 }
 

@@ -1,15 +1,10 @@
 class NewAdAlert < ActionMailer::Base
-  default from: "from@example.com"
+  default from: "do_not_reply@chercheappart.fr"
 
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.new_ad_alert.notify.subject
-  #
   def notify(user,project,ad)
     @username = user.first_name
     @project_name = project.name
     @link_url = ENV['DOMAIN'] + "#/project/#{project.id}/news"
-    mail(to: user.email)
+    mail(to: user.email, subject: "[CHERCHEAPPART] nouvelle annonce disponible")
   end
 end

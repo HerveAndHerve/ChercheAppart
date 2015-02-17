@@ -20,6 +20,7 @@ module MyApi
         desc "create a project"
         params do
           requires :name, type: String, desc: "the name of the project"
+          optional :send_alert_emails, type: Boolean, desc: "send alerts when new ad available (default: false)", default: false
           optional :search_criteria, type: Hash do 
             optional :min_surface, desc: "in squared meters"
             optional :max_surface, desc: "in squared meters"
@@ -31,6 +32,7 @@ module MyApi
         post do 
           p = Project.new(
             name: params[:name],
+            send_alert_emails: params[:send_alert_emails],
           )
 
           if p.save
@@ -89,6 +91,7 @@ module MyApi
           desc "update name, or search criteria"
           params do 
             optional :name, desc: "the project's name"
+            optional :send_alert_emails, type: Boolean, desc: "send alerts when new ad available (default: false)"
             optional :search_criteria, type: Hash do 
               optional :min_surface, desc: "in squared meters"
               optional :max_surface, desc: "in squared meters"
@@ -99,6 +102,7 @@ module MyApi
           end
           put do 
             @project.update_attributes(name: params[:name]) unless params[:name].blank?
+            @project.update_attributes(send_alert_emails: params[:send_alert_emails]) unless params[:send_alert_emails].nil?
             unless params[:search_criteria].blank?
               p = ActionController::Parameters.new(params[:search_criteria]).permit([
                 :min_surface,

@@ -8,6 +8,7 @@ module MyApi
       expose :new_ads_count
       expose :listed_ads_count
       expose :archived_ads_count
+      expose :send_alert_emails
 
       expose :search_criteria, using: MyApi::Entities::SearchCriteria
     end

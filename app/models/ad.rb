@@ -26,4 +26,21 @@ class Ad
     return active
   end
 
+  after_save :send_email_alerts!
+
+  protected
+
+  def send_email_alerts!
+    projects = Project
+    .where(send_alert_emails: true)
+    .lte('search_criteria.min_surface' => surface)
+    .gte('search_criteria.max_surface' => surface)
+    .lte('search_criteria.min_price' => price)
+    .gte('search_criteria.max_price' => price)
+    .any_in(district: [district,nil])
+
+    owners = User.find(projects.distinct(:owner_ids))
+
+  end
+
 end

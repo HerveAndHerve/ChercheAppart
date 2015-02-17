@@ -8,7 +8,7 @@ module AdScrapper
           h = {
             provider: :pap,
             price:       (p.xpath(".//span[contains(@class,'prix')]").first.text.gsub(/\D/,'').to_i rescue nil),
-            location:    nil,
+            location:    (p.xpath(".//div[contains(@class,'description')]/p/strong").first.text rescue nil),
             surface:     (p.xpath(".//span[contains(@class,'surface')]/..").children[2].text.strip.to_i rescue nil),
             description: (p.xpath(".//div[contains(@class,'description')]/p").first.text.strip rescue nil),
             url:         ((relative = p.xpath(".//a").first.attributes["href"].value rescue nil).blank? ? nil : relative.prepend("http://pap.fr")),

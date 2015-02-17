@@ -4,6 +4,7 @@ class Project
   include Shareable
 
   field :name
+  field :send_alert_emails, type: Boolean, default: false
   
   validates_presence_of :name
 

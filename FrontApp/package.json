@@ -1,6 +1,6 @@
 {
   "name": "trouverDesTerrains",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "author": "alexandre herve",
   "dependencies": {
     "bower": "~1.3.5",

@@ -22,4 +22,16 @@ namespace :front do
     end
   end
 
+  desc "setup front tools"
+  task :setup do
+    Dir.chdir('FrontApp') do
+      npm install -g bower
+      npm install -g karma
+      npm install -g gulp-cli
+    end
+  end
+
+  desc "setup and build front" 
+  task :deploy, [:environment, :setup, :build]
+
 end

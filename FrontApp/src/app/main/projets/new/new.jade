@@ -52,12 +52,14 @@ div.big-padding
 
     div( layout, layout-align="end", style="margin-top: 30px" )
       md-button( 
+        aria-label="cancel"
         ui-sref="main.project.news"
         ng-show="$state.current.name == 'main.project.edit'"
       )
         | annuler 
       &nbsp;
       md-button.md-raised.md-warn( 
+        aria-label="createOrEditProject"
         ng-click="createProject()"
       )
         | {{ action }} 

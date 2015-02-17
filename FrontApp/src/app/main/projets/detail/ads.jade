@@ -3,9 +3,10 @@ div(
   style="margin-bottom: 300px"
 )
   section( style="position: relative" flex )
-    div.md-subheader.md-default-theme
+    md-subheader.md-primary
       div.md-subheader-content
         h2 {{ Project.project.name }} 
+        h5( hide-gt-md ) {{ Lists.activeList().name }}
 
     div
       section
@@ -21,7 +22,7 @@ div(
             md-item( 
               ng-repeat="ad in Ads.ads"
               ng-hide="ad.hide"
-              md-swipe-left="archiveAd();"
+              md-swipe-left="archiveAd()"
               md-swipe-right="openMoveAdModal(ad, $event)"
             )
               md-divider

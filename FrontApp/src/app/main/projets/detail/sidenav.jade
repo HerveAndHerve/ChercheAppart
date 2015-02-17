@@ -1,12 +1,12 @@
-md-toolbar
+md-toolbar.md-primary( hide-gt-md )
   h1.md-toolbar-tools 
     span.fa.fa-bars( 
       ng-click="toggleLeftNav()"
       style="cursor: pointer"
       hide-gt-md
+      ng-show="$state.includes('main.project')" 
     )
-    a.pacifico( ui-sref="main.projects" ) &nbsp; ChercheAppart
-
+    a( ui-sref="main.projects") &nbsp; Mes listes
 md-content
   md-list.lands-list(
    style="margin-top: 0px; padding-top: 0px; border-right: 1px solid rgba(0, 0, 0, 0.12)"

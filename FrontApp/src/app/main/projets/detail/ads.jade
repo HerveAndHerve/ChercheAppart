@@ -31,8 +31,7 @@ div(
                   img( ng-src="{{ ad.img }}" style="width: 120px; margin: 10px" )
                 div.md-tile-content
                   div
-                    h3( ng-click="selectAd(ad)" ) {{ ad.location }} - {{ ad.district }}
-                      span(class='pull-right') {{ ad .created_at | date: format: 'dd/mm/yyyy' }}
+                    h3( ng-click="selectAd(ad)" ) {{ ad.district }} - {{ ad .created_at | date: format: 'dd/mm/yyyy' }}
                     p {{ ad.description }}
                     p {{ ad.price }} &euro;
                     p {{ ad.surface | number }} m

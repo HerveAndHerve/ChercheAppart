@@ -11,6 +11,7 @@ module MyApi
       expose :img
       expose :description
       expose :location
+      expose :created_at
     end
   end
 end
